@@ -1,0 +1,39 @@
+/* Styling for the tag present in HTML */
+
+table {
+    border: 2px;
+    border-style: solid;
+}
+
+table th {
+    border: 1px;
+    border-style: solid;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+table td {
+    border: 1px;
+    border-style: solid;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#note {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-style: italic;
+    color: rgb(134, 25, 170);
+    font-weight: bold;
+}
+
+text {
+    font-style: italic;
+    display: inline;
+    font-weight: bold;
+}
+
+h5 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
