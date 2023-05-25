@@ -1,0 +1,44 @@
+#Main {
+    border-style: solid;
+    border-color: rgb(109, 112, 113);
+    border-width: 2.5px;
+    border-radius: 0.2cm;
+    margin-right: 8px;
+    padding: 5px;
+}
+
+#Group {
+    border-style: solid;
+    border-color: rgb(109, 112, 113);
+    border-width: 2.5px;
+    border-radius: 0.2cm;
+    margin-right: 8px;
+}
+
+#Labels {
+    font-style: italic;
+    display: inline;
+    font-weight: bold;
+    font-size: 15px;
+    font-family: cursive;
+}
+
+text {
+    font-style: italic;
+    display: inline;
+    font-weight: bold;
+}
+
+.-swatches-0bbedc9e48783 {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 1em;
+}
+
+.-swatches-0bbedc9e48783::before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    margin-right: 0.5em;
+    background: var(--color);
+}
