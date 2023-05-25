@@ -1,5 +1,3 @@
-// var x, y, width, height, margin, xaxis, yaxis;
-// let data;
 
 d3.select("#show_a01").on("click", function () {
     d3.select("#assign1").attr("hidden", null);
