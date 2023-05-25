@@ -1,0 +1,6 @@
+/* Styling for Labels in color legend */
+text {
+    font-style: italic;
+    display: inline;
+    font-weight: bold;
+}
