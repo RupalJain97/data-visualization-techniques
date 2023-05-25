@@ -1,0 +1,86 @@
+/* Styling for Color Legend */
+#colorLegend {
+    margin-right: 8px;
+    padding: 5px;
+    background-color: rgb(254, 244, 254);
+}
+
+/* Styling for the Parallel Coordinates plot */
+#pcplot {
+    border-style: solid;
+    border-color: rgb(109, 112, 113);
+    border-width: 2.5px;
+    border-radius: 0.2cm;
+    margin-right: 8px;
+}
+
+/* Styling for displaying car's name in the popup box */
+div.tooltip-donut {
+    position: absolute;
+    text-align: center;
+    padding: 5px;
+    background: #FFFFFF;
+    color: #313639;
+    border: 1px solid #313639;
+    border-radius: 8px;
+    pointer-events: none;
+    font-size: 15px;
+}
+
+/* Styling for drop down manu */
+#columns option {
+    width: 100px;
+    top: 40px;
+    left: 25px;
+    text-align: left;
+    padding: 5px;
+    background: #FFFFFF;
+    color: #313639;
+    border: 1px solid #313639;
+    border-radius: 8px;
+    pointer-events: none;
+    font-size: 15px;
+}
+
+/* Styling for arrows in labels and flips */
+.increase,
+.decrease,
+.left,
+.right {
+    fill: #4269f5;
+    stroke: #070707;
+}
+
+/* Styling for Labels in color legend */
+#colorLegend .label {
+    font-style: italic;
+    display: inline;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Styling for note text in the plot */
+#note {
+    transform: translate(100, 0);
+    position: relative;
+    padding: 0px;
+}
+
+#note text {
+    position: relative;
+    padding: 5px;
+}
+
+/* Styling for text in the plot */
+#pcplot svg text {
+    font-style: italic;
+    display: inline;
+    font-weight: bold;
+}
+
+/* Stying the table for Answer 1 */
+table,
+th,
+td {
+    border: 1px solid;
+}
