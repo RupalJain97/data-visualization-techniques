@@ -1,0 +1,12 @@
+/* Styling for Color Legend */
+#colorLegend {
+    background-color: rgb(245, 254, 244);
+}
+
+/* Styling for Labels in color legend */
+#colorLegend .label {
+    font-style: italic;
+    display: inline;
+    font-weight: bold;
+    font-size: 14px;
+}
