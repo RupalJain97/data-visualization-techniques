@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Data Visualization Techniques</title>
+
+    <!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
+
+    <script src="d3.js"></script>
+    <!-- <script src="a01-Rupaljain27/d3.js"></script>
+    <script src="a02-Rupaljain27/d3.js"></script>
+    <script src="a03-Rupaljain27/d3.js"></script>
+    <script src="a04-Rupaljain27/d3.js"></script>
+    <script src="a05-Rupaljain27/d3.js"></script>
+    <script src="a06-Rupaljain27/d3.js"></script> -->
+
+    <script src="a01-Rupaljain27/svg.js"></script>
+    <script src="a01-Rupaljain27/scores.js"></script>
+
+    <script src="a02-Rupaljain27/scores.js"></script>
+    <script src="iris.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+    <script src="a03-Rupaljain27/cars.js"></script>
+
+    <!-- Linking the CSS file used for formatting the document -->
+    <link rel="stylesheet" href="a01-Rupaljain27/style.css" />
+    <link rel="stylesheet" href="a02-Rupaljain27/style.css" />
+    <link rel="stylesheet" href="a03-Rupaljain27/style.css" />
+    <link rel="stylesheet" href="a04-Rupaljain27/style.css" />
+    <link rel="stylesheet" href="a05-Rupaljain27/style.css" />
+    <link rel="stylesheet" href="a06-Rupaljain27/style.css" />
+</head>
+
+<body>
+    <h1>Advance Data Visualization techniques</h1>
+    <p>This project includes the different types of techniques employed to visualize the data. Click on the each button
+        to see the visualization.</p>
+
+    <div>
+        <input type="file" id="loadData">
+        <ol>
+            <li>
+                <p>
+                    Developing visualizations in d3.js in three different ways: (1) “by hand”, (2) through Javascript
+                    without any libraries, and (3) using d3.js
+                </p>
+                <button id="show_a01">Show</button>
+                <button id="hide_a01">Hide</button>
+                <div id="assign1" hidden>
+                    <div id="div1">
+                        <h4>Visualization 1 - by hand</h4>
+                        <svg width="400" height="400">
+                            <!-- Below 'g' tag contains 10 data points for the given set 'scores' -->
+                            <g transform="translate(0, 400) scale(1, -1)">
+                                <!-- 
+                              The coordinates of the circle have been calculated using the concept of Normalization to convert the points from the range [200-800] to [0-500]
+                              cx and cy are calculated with the below formula:
+                    
+                                First map x space to [200,800]:
+                                normACT(x) = (x - min(ACT)) / (max(ACT) - min(ACT)
+                                Then map normalized x space to pixels [0,500]:
+                                pixACT(x) = normACT(x) * (max(PIX) - min(PIX)) + min(PIX)
+                    
+                            -->
+                                <!-- <circle cx="191.34" cy="224.62" r="4"></circle>
+                                <circle cx="299.50" cy="124.79" r="4"></circle>
+                                <circle cx="166.38" cy="108.15" r="4"></circle>
+                                <circle cx="174.70" cy="207.98" r="4"></circle>
+                                <circle cx="191.34" cy="216.30" r="4"></circle>
+                                <circle cx="191.34" cy="141.43" r="4"></circle>
+                                <circle cx="199.66" cy="207.98" r="4"></circle>
+                                <circle cx="291.18" cy="174.70" r="4"></circle>
+                                <circle cx="307.82" cy="99.83" r="4"></circle>
+                                <circle cx="141.43" cy="232.94" r="4"></circle> -->
+
+                                <circle cx="191.66" cy="225.00" r="4"></circle>
+                                <circle cx="300.00" cy="125.00" r="4"></circle>
+                                <circle cx="166.66" cy="108.33" r="4"></circle>
+                                <circle cx="175.00" cy="208.33" r="4"></circle>
+                                <circle cx="191.66" cy="216.67" r="4"></circle>
+                                <circle cx="191.66" cy="141.67" r="4"></circle>
+                                <circle cx="200.00" cy="208.33" r="4"></circle>
+                                <circle cx="291.66" cy="175.00" r="4"></circle>
+                                <circle cx="308.33" cy="100.00" r="4"></circle>
+                                <circle cx="141.66" cy="233.33" r="4"></circle>
+
+                            </g>
+                            <!-- Marking the origin of the div1 -->
+                            <text x="5" y="390">(0,0)</text>
+                            <text x="40" y="390">&#8594;</text>
+                            <text x="5" y="370">&#8593;</text>
+                        </svg>
+
+                    </div>
+                    <div id="div2">
+                        <h4>Visualization 2 - through Javascript
+                            without any libraries</h4>
+                    </div>
+                    <div id="div3">
+                        <h4>Visualization 3 - using d3.js</h4>
+                    </div>
+                </div>
+            </li>
+            <br>
+            <li>
+                Create Brushable Scatterplot Matrix (also sometimes abbreviated as “SPLOMs”).
+                <button id="show_a02">Show</button>
+                <button id="hide_a02">Hide</button>
+                <div id="assign2" hidden>
+                    <div id="div1_a02"></div>
+                </div>
+            </li>
+            <br>
+
+            <li>
+                Create Brushable Scatterplot Matrix (also sometimes abbreviated as “SPLOMs”).
+                <button id="show_a03">Show</button>
+                <button id="hide_a03">Hide</button>
+                <div id="assign3" hidden>
+                    <div id="colorLegend">
+                        <select id="columns"></select>
+                    </div>
+                    <div id="div1_a03"></div>
+                </div>
+            </li>
+            <br>
+
+            <li>
+                Create Brushable Scatterplot Matrix (also sometimes abbreviated as “SPLOMs”).
+                <button id="show_a04">Show</button>
+                <button id="hide_a04">Hide</button>
+                <div id="assign4" hidden>
+                    <div id="div1_a04"></div>
+                </div>
+            </li>
+            <br>
+
+            <li>
+                Create Brushable Scatterplot Matrix (also sometimes abbreviated as “SPLOMs”).
+                <button id="show_a05">Show</button>
+                <button id="hide_a05">Hide</button>
+                <div id="assign5" hidden>
+                    <div id="div1_a05"></div>
+                </div>
+            </li>
+            <br>
+
+            <li>
+                Create Brushable Scatterplot Matrix (also sometimes abbreviated as “SPLOMs”).
+                <button id="show_a06">Show</button>
+                <button id="hide_a06">Hide</button>
+                <div id="assign6" hidden>
+                    <div id="div1_a06"></div>
+                </div>
+            </li>
+        </ol>
+
+    </div>
+
+    <script src="a01-Rupaljain27/plot2.js"></script>
+    <script src="a01-Rupaljain27/plot3.js"></script>
+
+    <script src="a02-Rupaljain27/a02.js"></script>
+
+    <script src="a02-Rupaljain27/a03.js"></script>
+
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="styleSelf.css" />
+</body>
+
+</html>
