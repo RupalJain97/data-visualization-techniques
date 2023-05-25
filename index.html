@@ -5,32 +5,33 @@
     <meta charset="UTF-8" />
     <title>Data Visualization Techniques</title>
 
-    <!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
-
     <script src="d3.js"></script>
-    <!-- <script src="a01-Rupaljain27/d3.js"></script>
-    <script src="a02-Rupaljain27/d3.js"></script>
-    <script src="a03-Rupaljain27/d3.js"></script>
-    <script src="a04-Rupaljain27/d3.js"></script>
-    <script src="a05-Rupaljain27/d3.js"></script>
-    <script src="a06-Rupaljain27/d3.js"></script> -->
-
-    <script src="a01-Rupaljain27/svg.js"></script>
-    <script src="a01-Rupaljain27/scores.js"></script>
-
-    <script src="a02-Rupaljain27/scores.js"></script>
-    <script src="iris.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
-    <script src="a03-Rupaljain27/cars.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.js"></script>
+
+    <script src="technique1/svg.js"></script>
+    <script src="technique1/scores.js"></script>
+
+    <script src="technique2/scores.js"></script>
+    <script src="technique2/iris.js"></script>
+
+    <script src="technique3/cars.js"></script>
+
+    <script src="technique4/flare.js"></script>
+
+    <script src="technique5/vtk.js"></script>
+    <script src="technique5/volren.js"></script>
+
+    <script src="technique6/flowvis.js"></script>
+    <script src="technique6/vtk.js"></script>
 
     <!-- Linking the CSS file used for formatting the document -->
-    <link rel="stylesheet" href="a01-Rupaljain27/style.css" />
-    <link rel="stylesheet" href="a02-Rupaljain27/style.css" />
-    <link rel="stylesheet" href="a03-Rupaljain27/style.css" />
-    <link rel="stylesheet" href="a04-Rupaljain27/style.css" />
-    <link rel="stylesheet" href="a05-Rupaljain27/style.css" />
-    <link rel="stylesheet" href="a06-Rupaljain27/style.css" />
+    <link rel="stylesheet" href="technique1/style.css" />
+    <link rel="stylesheet" href="technique2/style.css" />
+    <link rel="stylesheet" href="technique3/style.css" />
+    <link rel="stylesheet" href="technique4/style.css" />
+    <link rel="stylesheet" href="technique5/style.css" />
+    <link rel="stylesheet" href="technique6/style.css" />
 </head>
 
 <body>
@@ -115,7 +116,7 @@
             <br>
 
             <li>
-                Create Brushable Scatterplot Matrix (also sometimes abbreviated as “SPLOMs”).
+                Creating interactive Parallel Coordinates visualization for multidimensional datasets.
                 <button id="show_a03">Show</button>
                 <button id="hide_a03">Hide</button>
                 <div id="assign3" hidden>
@@ -128,43 +129,166 @@
             <br>
 
             <li>
-                Create Brushable Scatterplot Matrix (also sometimes abbreviated as “SPLOMs”).
+                Visualization of hierarchical data using a technique known as Treemaps.
                 <button id="show_a04">Show</button>
                 <button id="hide_a04">Hide</button>
                 <div id="assign4" hidden>
-                    <div id="div1_a04"></div>
+
+                    <div style="margin-bottom: 5px; margin-top: 10px;">
+                        <button id="size">Size</button>
+                        <button id="count">Count</button>
+                        <button id="best-size">Best Size</button>
+                        <button id="best-count">Best Count</button>
+                        <button id="square-size">Squarified Size</button>
+                        <button id="square-count">Squarified Count</button>
+                    </div>
+                    <svg id="svg_a04"></svg>
                 </div>
             </li>
             <br>
 
             <li>
-                Create Brushable Scatterplot Matrix (also sometimes abbreviated as “SPLOMs”).
+                Visualize three-dimensional scalar fields through the use of volume rendering. We will rely on a volume
+                renderer from the VTK library.
                 <button id="show_a05">Show</button>
                 <button id="hide_a05">Hide</button>
                 <div id="assign5" hidden>
-                    <div id="div1_a05"></div>
+                    <div>
+                        <input type="file" id="loadData">
+                        <button id="sequential">Sequential</button>
+                        <button id="diverging">Diverging</button>
+                        <button id="categorical">Categorical</button>
+                        <text id="currentSelection"></text>
+                    </div>
+
+                    <div>
+                        <div id="volren"></div>
+                        <div id="tfunc"></div>
+                    </div>
                 </div>
             </li>
             <br>
 
             <li>
-                Create Brushable Scatterplot Matrix (also sometimes abbreviated as “SPLOMs”).
+                Basics of vector field visualization through encoding per-position properties with a variety of techniques. Specific objectives include:
+                <ol>
+                    <li>Using color and glyphs to encode both magnitude and orientation.</li>
+                    <li>Using streamlines to capture integrated properties of streamlines.</li>
+                    <li>Experimenting with both random and uniform seeding patterns to adjust the position of both glyphs and streamlines</li>
+                </ol>
                 <button id="show_a06">Show</button>
                 <button id="hide_a06">Hide</button>
                 <div id="assign6" hidden>
-                    <div id="div1_a06"></div>
+                    <div>
+                        <input type="file" id="loadData">
+                        <label>Vector field:</label>
+                        <select name="type" id="type">
+                            <option value="Glyphs" selected>Glyphs</option>
+                            <option value="Streamline">Streamline</option>
+                        </select>
+                        <label>Seeding Position:</label>
+                        <select name="seeding" id="seeding">
+                            <option value="Uniform" selected>Uniform</option>
+                            <option value="Random">Random</option>
+                        </select>
+                    </div>
+                    <p id="note">Change the values below with respect to the vector field and position selected above
+                    </p>
+                    <h5>Default Values:</h5>
+                    <table>
+                        <th colspan="4">Base formula to calculate DT and number of steps: Modify the values to
+                            experiment</th>
+                        <tr>
+                            <td>
+                                maxSpeed = vf.range[1] - vf.range[0]
+                            </td>
+                            <td>
+                                domainWidth = vf.bounds[1] - vf.bounds[0]
+                            </td>
+                            <td>
+                                dt = Math.round(domainWidth / (maxSpeed * scalingFactor))
+                            </td>
+                            <td>
+                                numSteps = Math.round(domainWidth / (maxSpeed * dt))
+                            </td>
+                        </tr>
+                    </table>
+                    <br>
+                    <table>
+                        <tr>
+                            <th>Vector field</th>
+                            <th>Position</th>
+                            <th>Maximum Speed</th>
+                            <th>Domain Width</th>
+                            <th>Scaling Factor</th>
+                            <th>Number of steps</th>
+                            <th>Delta t</th>
+                            <th>Number of points, X</th>
+                            <th>Number of points, Y</th>
+                        </tr>
+                        <tr>
+                            <td>Glyphs</td>
+                            <td>Uniform</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td><input type="number" id="GlyphsNumX" value="30"></td>
+                            <td><input type="number" id="GlyphsNumY" value="30"></td>
+                        </tr>
+                        <tr>
+                            <td>Glyphs</td>
+                            <td>Random</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td><input type="number" id="GlyphsRandNumX" value="100"></td>
+                            <td><input type="number" id="GlyphsRandNumY" value="10"></td>
+                        </tr>
+                        <tr>
+                            <td>Streamline</td>
+                            <td>Uniform</td>
+                            <td id="maxSpeed"></td>
+                            <td id="domainWidth"></td>
+                            <td><input type="number" id="scalingfactor" value="10"></td>
+                            <td><input type="number" id="steps" value=""></td>
+                            <td><input type="number" id="dt" value=""></td>
+                            <td><input type="number" id="StreamNumX" value="30"></td>
+                            <td><input type="number" id="StreamNumY" value="30"></td>
+                        </tr>
+                        <tr>
+                            <td>Streamline</td>
+                            <td>Random</td>
+                            <td id="maxSpeed"></td>
+                            <td id="domainWidth"></td>
+                            <td><input type="number" id="Randscalingfactor" value="10"></td>
+                            <td><input type="number" id="Randsteps" value=""></td>
+                            <td><input type="number" id="Randdt" value=""></td>
+                            <td><input type="number" id="StreamRandNumX" value="100"></td>
+                            <td><input type="number" id="StreamRandNumY" value="10"></td>
+                        </tr>
+                    </table>
+                    <button type="reset" id="reset"
+                        style="margin-top: 5px; color:rgb(0, 0, 0); background-color: rgb(201, 147, 251);">Reset</button>
+
+                    <div id="vfplot"></div>
                 </div>
             </li>
         </ol>
 
     </div>
 
-    <script src="a01-Rupaljain27/plot2.js"></script>
-    <script src="a01-Rupaljain27/plot3.js"></script>
+    <script src="technique1/plot2.js"></script>
+    <script src="technique1/plot3.js"></script>
 
-    <script src="a02-Rupaljain27/a02.js"></script>
-
-    <script src="a02-Rupaljain27/a03.js"></script>
+    <script src="technique2/a02.js"></script>
+    <script src="technique3/a03.js"></script>
+    <script src="technique4/a04.js"></script>
+    <script src="technique5/a05.js"></script>
+    <script src="technique6/a06.js"></script>
 
     <script src="main.js"></script>
     <link rel="stylesheet" href="styleSelf.css" />
