@@ -1,0 +1,65 @@
+/* 
+ 
+ CSSjs
+ Helper functions for CSC544 Assignment 01
+ Rupal Jain <jainrupal@arizona.edu>
+
+ This file includes elements formatting using CSS. 
+ 
+*/
+
+/* Formatting all <h1> tags */
+h1 {
+    padding: 0%;
+    font-style: italic;
+    color: rgb(65, 42, 165);
+    margin: 0px;
+}
+
+/* Formatting <svg> tags under div1 and div3 */
+svg {
+    background-color: #17ceceb5;
+    border-style: solid;
+    border-color: rgb(109, 112, 113);
+    border-width: 2.5px;
+    border-radius: 0.2cm;
+    background-image: linear-gradient(to bottom right, rgb(251, 241, 255), rgb(240, 239, 240));
+}
+
+/* Formatting <svg> tags under div2 */
+#div2 svg {
+    background-color: #17ceceb5;
+    border-style: solid;
+    border-color: rgb(109, 112, 113);
+    border-width: 2.5px;
+    border-radius: 0.2cm;
+    background-image: linear-gradient(to bottom right, rgb(254, 254, 225), rgb(240, 240, 239));
+    /* background-image: linear-gradient(to bottom right, rgb(227, 246, 226), rgb(239, 240, 239)); */
+}
+
+/* Formatting all <circle> tags */
+#div1 svg circle {
+    fill: rgb(52, 41, 147);
+}
+
+/* Text formatting for the cordinates on the x-axis and y-axis in Visualization 2 */
+.coordinates {
+    font-style: italic;
+    display: inline;
+    font-size: 12px;
+    font-family: 'Arial Narrow';
+}
+
+/* Formatting for the x-axis and y-axis in Visualization 2 */
+line {
+    display: inline;
+    stroke: black;
+    stroke-width: 1.4px;
+}
+
+/* Text formatting for the text tags in Visualization 2 and 3 */
+text {
+    font-style: italic;
+    display: inline;
+    font-weight: bold;
+}
