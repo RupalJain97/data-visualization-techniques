@@ -145,9 +145,9 @@ function yaxis() {
         */
         var element = document.createElementNS("http://www.w3.org/2000/svg", "line");
         element.setAttributeNS(null, "x1", 44);
-        element.setAttributeNS(null, "y1", 327 - i);
+        element.setAttributeNS(null, "y1", 335 - i);
         element.setAttributeNS(null, "x2", 50);
-        element.setAttributeNS(null, "y2", 327 - i);
+        element.setAttributeNS(null, "y2", 335 - i);
         svg2.append(element)
 
         /*
@@ -156,7 +156,7 @@ function yaxis() {
         var text = document.createElementNS("http://www.w3.org/2000/svg", "text");
         text.setAttributeNS(null, "class", "coordinates");
         text.setAttributeNS(null, "x", 28);
-        text.setAttributeNS(null, "y", 330 - i);
+        text.setAttributeNS(null, "y", 340 - i);
         text.textContent = value.toString();
         svg2.append(text);
         value = value + 2;
@@ -165,7 +165,7 @@ function yaxis() {
         count = count + 1;
 
         // 42 is the amount of distance between 2 markings
-        i = i + 42;
+        i = i + 32;
     }
 }
 
@@ -177,7 +177,7 @@ yaxis()
 var Origintext = document.createElementNS("http://www.w3.org/2000/svg", "text")
 svg2.append(Origintext)
 Origintext.setAttributeNS(null, "text-anchor", "end")
-Origintext.setAttributeNS(null, "x", 32)
+Origintext.setAttributeNS(null, "x", 30)
 Origintext.setAttributeNS(null, "y", 394)
 Origintext.setAttributeNS(null, "font-size", 15)
 Origintext.textContent = "(0,0)"
