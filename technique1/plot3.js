@@ -27,22 +27,22 @@ let svg3 = d3.select("#div3")
 
 // Creating scales for both the X and Y axis, setting the domain based on the maximum and minimum values of the sum of SAT scores and ACT scores. Padding has been used to make the graph look clean and to give some space of the side of the div3 element. Setting the range based on the screen space available
 // in the below scale, domain [680, 1580] and range[50, 475]
-let xScale = d3.scaleLinear()
+let xScale_a01 = d3.scaleLinear()
     .domain([minX - padding, maxX])
     .range([padding, width - (padding / 2)])
 
 // in the below scale, domain [15, 35] and range[450, 25]
-let yScale = d3.scaleLinear()
+let yScale_a01 = d3.scaleLinear()
     .domain([minY, 35])
     .range([height - padding, 25])
 
 
-// Creating an Bottom Axis using xScale defined above
-xAxis = d3.axisBottom().scale(xScale);
+// Creating an Bottom Axis using xScale_a01 defined above
+xAxis = d3.axisBottom().scale(xScale_a01);
 
 
-// Creating an Left Axis using yScale defined above
-yAxis = d3.axisLeft().scale(yScale);
+// Creating an Left Axis using yScale_a01 defined above
+yAxis = d3.axisLeft().scale(yScale_a01);
 
 // Using the D3 function call : Crreating sequential scale which is similar to a continuous scale. Mapping of data points is done between domain and range provided. In this case, range will be defined by interpolator. d3.interpolateTurbo is used to define the color range for the GPA values with domain as [1,4]
 // This way seems out to be more efficient way to add colors to the data points. 
