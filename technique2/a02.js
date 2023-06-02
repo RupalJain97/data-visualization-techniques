@@ -321,7 +321,6 @@ function makeScatterplot(selection, attrib_pair) {
 function updateBrush_a02() {
   return function (event) {
 
-    console.log(event)
     if (event.selection != null) {
       //store the selected range for use in onBrush_a02()
 
@@ -435,15 +434,12 @@ function onBrush_a02() {
     return selected;
   }
 
-  console.log("Entered");
-
   let allCircles = d3.select("#assign2").selectAll("circle");
 
   // Instead of setting a different style of the non-selected circles, I had assigned a style to all of the circles before and then change the style of the selected circles.
   allCircles
     .attr("r", 2.5)
     .attr("fill", function (d) {
-      console.log(d, d.species, z(d.species))
       if (d.species == undefined) {
         return z(d.GPA);
       } else {
