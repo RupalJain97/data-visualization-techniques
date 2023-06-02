@@ -25,21 +25,13 @@
 //this variable will hold the vector field upon loading
 let vf = null;
 
-//variables for the svg canvas
-svg = null;
-width = 800;
-height = 800;
-
-// defining Padding
-padding = 50;
 
 // Defining the scales for the x and y axis, colorscale and magnitude scale
-xScale = null;
-yScale = null;
-colorScale = null;
 let magScale = null;
 
 let flag = false;
+
+var input;
 ////////////////////////////////////////////////////////////////////////
 // Visual Encoding portion that handles the d3 aspects
 
@@ -449,11 +441,12 @@ function createStreamlines() {
   });
 }
 
+
 ////////////////////////////////////////////////////////////////////////
 // Function to read data
 
-// Function to process the upload
-function upload() {
+// Function to process the upload_a06
+function upload_a06() {
   if (input.files.length > 0) {
     let file = input.files[0];
     console.log("You chose", file.name);
@@ -471,24 +464,6 @@ function upload() {
     }
   }
 }
-
-// Attach upload process to the loadData button
-var input = document.getElementById("loadData");
-input.addEventListener("change", function () {
-  document.getElementById("GlyphsNumX").value = "30";
-  document.getElementById("GlyphsNumY").value = "30";
-  document.getElementById("GlyphsRandNumX").value = "100";
-  document.getElementById("GlyphsRandNumY").value = "10";
-  document.getElementById("StreamNumX").value = "30";
-  document.getElementById("StreamNumY").value = "30";
-  document.getElementById("StreamRandNumX").value = "100";
-  document.getElementById("StreamRandNumY").value = "10";
-  document.getElementById("steps").value = "";
-  document.getElementById("dt").value = "";
-  document.getElementById("Randsteps").value = "";
-  document.getElementById("Randdt").value = "";
-  upload();
-});
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -619,3 +594,41 @@ d3.select("#reset")
     document.getElementById("Randdt").value = "";
     initializeSVG();
   });
+
+
+function main_a06() {
+  let vf = null;
+
+  //variables for the svg canvas
+  svg = null;
+  width = 800;
+  height = 800;
+
+  // defining Padding
+  padding = 50;
+
+  // Defining the scales for the x and y axis, colorscale and magnitude scale
+  xScale = null;
+  yScale = null;
+  colorScale = null;
+  magScale = null;
+  flag = false;
+
+  // Attach upload_a06 process to the loadData button
+  input = document.getElementById("loadData_a06");
+  input.addEventListener("change", function () {
+    document.getElementById("GlyphsNumX").value = "30";
+    document.getElementById("GlyphsNumY").value = "30";
+    document.getElementById("GlyphsRandNumX").value = "100";
+    document.getElementById("GlyphsRandNumY").value = "10";
+    document.getElementById("StreamNumX").value = "30";
+    document.getElementById("StreamNumY").value = "30";
+    document.getElementById("StreamRandNumX").value = "100";
+    document.getElementById("StreamRandNumY").value = "10";
+    document.getElementById("steps").value = "";
+    document.getElementById("dt").value = "";
+    document.getElementById("Randsteps").value = "";
+    document.getElementById("Randdt").value = "";
+    upload_a06();
+  });
+}
