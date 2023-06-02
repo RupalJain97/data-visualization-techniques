@@ -29,14 +29,22 @@ d3.select("#hide_a03").on("click", function () {
 
 d3.select("#show_a04").on("click", function () {
     d3.select("#assign4").attr("hidden", null);
+    main_a04();
 });
 d3.select("#hide_a04").on("click", function () {
     d3.select("#assign4").attr("hidden", true);
+    d3.select("#div1_a04").html("");
 });
 
 
 d3.select("#show_a05").on("click", function () {
     d3.select("#assign5").attr("hidden", null);
+    var fileInput = d3.select("#loadData").node(); // Select the file input element
+    var isFileUploaded = fileInput.value !== ""; // Check if the value is not empty
+
+    if (!isFileUploaded) {
+        main_a05();
+    }
 });
 d3.select("#hide_a05").on("click", function () {
     d3.select("#assign5").attr("hidden", true);
