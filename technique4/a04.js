@@ -145,8 +145,9 @@ function main_a04() {
   lastRect = { x1: 0, y1: 0, x2: 0, y2: 0 };
 
   // initialize the tree map
-  winWidth = window.innerWidth;
-  winHeight = window.innerHeight;
+  winWidth = 1228;
+  winHeight = 571;
+  // winWidth: 1536, winHeight: 714
 
   // compute the rectangles for each tree node
   setRectangles(
