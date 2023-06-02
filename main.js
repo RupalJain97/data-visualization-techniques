@@ -20,7 +20,10 @@ d3.select("#show_a03").on("click", function () {
     main_a03();
 });
 d3.select("#hide_a03").on("click", function () {
-    d3.select("#assign3").empty();
+    d3.select("#assign3").attr("hidden", true);
+    d3.select("#div1_a03").html("");
+    d3.select("#colorLegend").html("");
+    d3.select("#colorLegend").append("select").attr("id", "columns");
 });
 
 
