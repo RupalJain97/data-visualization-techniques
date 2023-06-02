@@ -30,3 +30,9 @@ svg text {
   display: inline-block;
   vertical-align: top;
 }
+
+.btn{
+  background-color: #ddccf4;
+  border: 2px solid black;
+  color: black;
+}
