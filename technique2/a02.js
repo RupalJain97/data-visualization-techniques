@@ -20,9 +20,7 @@
 
 
 // Comment out one of the following two lines to select a dataset
-console.log("Before: ", data)
 data = iris;
-console.log("After: ", data);
 // data = scores;
 
 
@@ -85,7 +83,7 @@ yaxis = d3.axisLeft()
   Creating color codes legend for better mapping
 */
 if (data == iris) {
-  d3.select("#div1_a02")
+  d3.select("#colorLegend_a02")
     .append("span")
     .attr("class", "-swatches-0bbedc9e48783")
     .attr("style", "--color: #1f77b4")
@@ -94,7 +92,7 @@ if (data == iris) {
     .attr("x", padding)
     .attr("y", width + padding / 2)
     .text("Setosa");
-  d3.select("#div1_a02")
+  d3.select("#colorLegend_a02")
     .append("span")
     .attr("class", "-swatches-0bbedc9e48783")
     .attr("style", "--color: #ff7f0e")
@@ -103,7 +101,7 @@ if (data == iris) {
     .attr("x", padding)
     .attr("y", width + padding / 2)
     .text("Versicolor");
-  d3.select("#div1_a02")
+  d3.select("#colorLegend_a02")
     .append("span")
     .attr("class", "-swatches-0bbedc9e48783")
     .attr("style", "--color: #2ca02c")
@@ -113,7 +111,7 @@ if (data == iris) {
     .attr("y", width + padding / 2)
     .text("Virginica");
 } else {
-  d3.select("#div1_a02").append("span")
+  d3.select("#colorLegend_a02").append("span")
     .attr("class", "-swatches-0bbedc9e48783")
     .attr("style", "--color: black")
     .join("text")
@@ -215,8 +213,8 @@ svg.append("g")
 /*
   PosID -> this variable is also a helper variable that is used to provide the id of the brush group component under which the selection has been made by the user. This id has been extracted from the event variable whenever a selection has been made.
 */
-var brushes = []
-var CurrentBrushes = null
+let brushes_a02 = []
+var Currentbrushes_a02 = null
 let PosID = null;
 
 // Creating rectangles for each cell by setting the x coordinate, y coordinate, width and height values and appending it under each cell in MainPlot
@@ -262,9 +260,9 @@ function makeScatterplot(selection, attrib_pair) {
   // Added the coordoinates to be passed to extend function
   let brush = d3.brush()
     .extent([[padding / 2 - 10, padding / 2 - 10], [size - padding / 2 + 10, size - padding / 2 + 10]])
-    .on("start", updateBrush())
-    .on("brush", updateBrush())
-    .on("end", updateBrush());
+    .on("start", updateBrush_a02())
+    .on("brush", updateBrush_a02())
+    .on("end", updateBrush_a02());
 
   // Creating a new group tag for each brush and assigning an ID to that tag. 
   let matrixCell = selection.append("g").attr("id", `#Pos${xCoor}${yCoor}`)
@@ -309,7 +307,7 @@ function makeScatterplot(selection, attrib_pair) {
 
 /*
   The below function is called when the brush is started till the end stage. The stages include start, brush...(*x)., end. There are multiple calls for brush stage because of the dragging functionality, the brush stage is called starting from the initial point and gradually increasing the [x1,y1] coordinates of the hightlighted area and ultimately comes to an end.
-  We are calling the updateBrush() on every stage of the brushing and have thus organized the function to be suitable in all the stages.
+  We are calling the updateBrush_a02() on every stage of the brushing and have thus organized the function to be suitable in all the stages.
 
   Logic: I have used if else condition for each stage.
           Start -> Making the CurrentBrushes as Null for the active brush. This is required to save the states of the brush coordinates and ultimately store the last brush coordinates when completed.
@@ -320,13 +318,15 @@ function makeScatterplot(selection, attrib_pair) {
 
   Output: It will highlight the data points common in all of the brushes and color the data points not in common to their base colors.
 */
-function updateBrush() {
+function updateBrush_a02() {
   return function (event) {
+
+    console.log(event)
     if (event.selection != null) {
-      //store the selected range for use in onBrush()
+      //store the selected range for use in onBrush_a02()
 
       /*
-      The selected range here is addressed by the brushes variable which store the final coordinates of the brushing rectangle and is used in onBrush function to highlight the points in real time
+      The selected range here is addressed by the brushes variable which store the final coordinates of the brushing rectangle and is used in onBrush_a02 function to highlight the points in real time
 
       To keep the selection from all the brushes is maintained by the master variable 'brushes' as explained above. 
       */
@@ -342,27 +342,28 @@ function updateBrush() {
           1. Using the property: "style:'display: none;'". Whenever any highlight is made, this display style is removed from the tag, whereas when the highlight is removed from the view, the brush applies display none style to the rect.selection tag again. 
           2. Whenever any brush is being moved or dragged or even deselected from the cell, start stage is triggered and we will check if the PosID of this brush is already present in the master variable or not. If present, we will remove it. If the brush is dragged, then brush state will trigger and will again add the brush entry to the master variable.
         */
-        brushes.forEach(function (element, i) {
+
+        brushes_a02.forEach(function (element, i) {
           if (element[1] == PosID) {
-            brushes.splice(i, 1)
+            brushes_a02.splice(i, 1)
           }
         })
 
-        CurrentBrushes = null
+        Currentbrushes_a02 = null
 
-        // We are returning from start stage as the brushes is still empty and going into onBrush can be avoided.
+        // We are returning from start stage as the brushes is still empty and going into onBrush_a02 can be avoided.
         return;
       }
       else if (event.type == "brush") {
         // If the currenBrushes is null then we will push the coordinates of the highlighted rectangle for the first time.
 
-        if (CurrentBrushes != null) {
-          brushes.pop()
-          CurrentBrushes = event.selection
-          brushes.push([event.selection, PosID])
+        if (Currentbrushes_a02 != null) {
+          brushes_a02.pop()
+          Currentbrushes_a02 = event.selection
+          brushes_a02.push([event.selection, PosID])
         } else {
-          CurrentBrushes = event.selection
-          brushes.push([event.selection, PosID])
+          Currentbrushes_a02 = event.selection
+          brushes_a02.push([event.selection, PosID])
         }
       }
       else if (event.type == "end") {
@@ -372,7 +373,7 @@ function updateBrush() {
         return;
       }
     }
-    onBrush();
+    onBrush_a02();
   };
 }
 
@@ -380,13 +381,13 @@ function updateBrush() {
   The below function is called at each of the brush stage. 
 
   Logic: 
-        On every call of onBrush function, I am making the data points colored to their original/base color which was based on the type of species. And then using the filter feature to filter the data points lying in all of the brushes.
+        On every call of onBrush_a02 function, I am making the data points colored to their original/base color which was based on the type of species. And then using the filter feature to filter the data points lying in all of the brushes.
 
   Input: brushes 
 
   Output: It will highlight the data points common in all of the brushes and color the data points not in common to their base colors.
 */
-function onBrush() {
+function onBrush_a02() {
   function isSelected(d) {
     // Changed the default value of selected variable from false to null but it can be done with the 'False' value as well which requires some minimal changes in the below logic
     let selected = null;
@@ -396,7 +397,7 @@ function onBrush() {
     */
     var XPoint = parseFloat(this.attributes.cx.value)
     var YPoint = parseFloat(this.attributes.cy.value)
-    brushes.forEach(function (brush) {
+    brushes_a02.forEach(function (brush) {
       // Checking: cx coordinate shoud be between [x0] and [x1] coordinates of the brushing rectangle.
       // Checking: cy coordinate shoud be between [y0] and [y1] coordinates of the brushing rectangle.
       // Here [x0, y0] and [x1, y1] are the coordinated of a single brush
@@ -423,7 +424,7 @@ function onBrush() {
     let selected = true;
     var XPoint = parseFloat(this.attributes.cx.value)
     var YPoint = parseFloat(this.attributes.cy.value)
-    brushes.forEach(function (brush) {
+    brushes_a02.forEach(function (brush) {
       inter = (brush[0][0][0] > XPoint
         || brush[0][1][0] < XPoint
         || brush[0][0][1] > YPoint
@@ -434,22 +435,24 @@ function onBrush() {
     return selected;
   }
 
-  let allCircles = d3.select("assign2").selectAll("circle");
+  console.log("Entered");
+
+  let allCircles = d3.select("#assign2").selectAll("circle");
 
   // Instead of setting a different style of the non-selected circles, I had assigned a style to all of the circles before and then change the style of the selected circles.
   allCircles
     .attr("r", 2.5)
     .attr("fill", function (d) {
-      console.log("Brushing: ", d)
+      console.log(d, d.species, z(d.species))
       if (d.species == undefined) {
-        return z(d.species);
-      } else {
         return z(d.GPA);
+      } else {
+        return z(d.species);
       }
     })
 
 
-  let selected = allCircles
+  allCircles
     .filter(isSelected)
     .attr("r", 3.5)
     .attr("fill", function (d) {
