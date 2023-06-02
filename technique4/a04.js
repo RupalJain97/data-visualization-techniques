@@ -17,11 +17,6 @@
 ////////////////////////////////////////////////////////////////////////
 // Global variables for the dataset 
 
-// HINT: Start with one of the smaller test datesets included in
-// test-cases.js instead of the larger tree in flare.js
-data = flare;
-
-
 
 ////////////////////////////////////////////////////////////////////////
 // Tree related helper functions
@@ -74,29 +69,115 @@ function setTreeDepth(tree, depth) {
 
 
 // Initialize the size, count, and depth variables within the tree
-let Treesize = setTreeSize(data);
-setTreeCount(data);
+let Treesize;
 
+let winWidth;
+let winHeight;
 
 // let maxDepth = setTreeDepth(data, 0);  --> original line
 /**
  * Setted the maxdepth to zero, and then calling the setTreeDepth function to mark the dept of each node. Root has depth as 0 and the leaf nodes have the maximum depth.
  */
 let maxDepth = 0;
-let depth = setTreeDepth(data, 0, maxDepth);
+let depth;
 
 /**
  * Colorscale defined and interpolatePurples color has been used for good visualization
  */
-let colorScale = d3.scaleSequential()
-  .domain([maxDepth, 0])
-  .interpolator(d3.interpolatePurples);
+let colorScale;
+let scale;
+
+// make a list of all tree nodes;
+function makeTreeNodeList(tree, lst) {
+  lst.push(tree);
+  if (tree.children !== undefined) {
+    for (let i = 0; i < tree.children.length; ++i) {
+      makeTreeNodeList(tree.children[i], lst);
+    }
+  }
+}
+
+let treeNodeList = [];
+
+
+////////////////////////////////////////////////////////////////////////
+// Visual Encoding portion
+
+/**
+ * set the visual attributes of each rect. This should use all of the information that you’ve inserted in the tree through the four “set” functions.
+ */
+function setAttrs(sel) {
+  // TODO: WRITE THIS PART.
+  sel.attr("width", function (treeNode) {return treeNode.rect.x2 - treeNode.rect.x1; })
+    .attr("height", function (treeNode) { return treeNode.rect.y2 - treeNode.rect.y1; })
+    .attr("x", function (treeNode) { return treeNode.rect.x1; })
+    .attr("y", function (treeNode) { return treeNode.rect.y1; })
+    .attr("fill", function (treeNode) { return colorScale(treeNode.depth) })
+    .attr("stroke", function (treeNode) { return "Black"; });
+}
+
+/**
+ * Main function call for the treemap
+ */
+function main_a04() {
+  data = flare;
+  // Initialize the size, count, and depth variables within the tree
+  Treesize = setTreeSize(data);
+  setTreeCount(data);
+
+
+  // let maxDepth = setTreeDepth(data, 0);  --> original line
+  /**
+   * Setted the maxdepth to zero, and then calling the setTreeDepth function to mark the dept of each node. Root has depth as 0 and the leaf nodes have the maximum depth.
+   */
+  maxDepth = 0;
+  depth = setTreeDepth(data, 0, maxDepth);
+
+  /**
+   * Colorscale defined and interpolatePurples color has been used for good visualization
+   */
+  colorScale = d3.scaleSequential()
+    .domain([maxDepth, 0])
+    .interpolator(d3.interpolatePurples);
+
+  scale = null;
+
+  lastRect = { x1: 0, y1: 0, x2: 0, y2: 0 };
+
+  // initialize the tree map
+  winWidth = window.innerWidth;
+  winHeight = window.innerHeight;
+
+  // compute the rectangles for each tree node
+  setRectangles(
+    { x1: 0, y1: 0, x2: winWidth, y2: winHeight }, data,
+    function (t) { return t.size; }
+  );
+
+  treeNodeList = [];
+  makeTreeNodeList(data, treeNodeList);
+
+  // d3 selection to draw the tree map 
+  let gs = d3.select("#svg_a04")
+    .attr("width", winWidth)
+    .attr("height", winHeight)
+    .selectAll("g")
+    .data(treeNodeList)
+    .enter()
+    .append("g");
+
+  gs.append("rect").call(setAttrs);
+
+  gs.select("rect").append("title")
+    .text(function (treeNode) {
+      return treeNode.name;
+    });
+}
 
 
 ////////////////////////////////////////////////////////////////////////
 // Main Code for the Treemapping Technique
 
-let scale = null;
 
 /**
  * This function should set the variable rect for each node in the tree. This code is currently set to store the minimum and maximum 
@@ -305,215 +386,6 @@ function setRectangles_Best(rect, tree, attrFun) {
 
 
 
-////////////////////////////////////////////////////////////////////////
-/**
- * Callback function to show the visualization of Squarified treemap.
- * 
- * @param {*} rect --> contains the rect of the current node
- * @param {*} tree --> current node
- * @param {*} attrFun --> Function passed to get Count or Size values of the nodes
- * @param {*} totalAreaLeft --> contains the total size or count
- */
-let lastRect = { x1: 0, y1: 0, x2: 0, y2: 0 };
-
-function setRectangle_Square(rect, tree, attrFun, totalAreaLeft) {
-  tree.rect = rect;
-
-  /**
-   * Function to calculate the Aspect ratio based on Widht and Height
-   */
-  function calculateAspectRatio(size, currentRow, width, height, totalAreaLeft) {
-    if (width > height) {
-      const rowArea = currentRow.reduce((sum, node) => sum + attrFun(node), 0);
-      let Height = (size / rowArea) * height;
-      let Width = (rowArea / totalAreaLeft) * width;
-      const aspectRatio = Math.max((Height / Width), (Width / Height));
-      return aspectRatio;
-    } else {
-      const rowArea = currentRow.reduce((sum, node) => sum + attrFun(node), 0);
-      let Width = (size / rowArea) * width;
-      let Height = (rowArea / totalAreaLeft) * height;
-      const aspectRatio = Math.max((Height / Width), (Width / Height));
-      return aspectRatio;
-    }
-  }
-
-
-  if (tree.children !== undefined) {
-    /**
-     * Sorting the array
-     */
-    tree.children.sort(function (a, b) {
-      return attrFun(b) - attrFun(a);
-    });
-
-    let border = 5;
-    let currentRow = [];
-    let currentAspectRatio = 0;
-    let newRect = rect;
-    let rowHeight = newRect.y2 - newRect.y1;
-    let rowWidth = newRect.x2 - newRect.x1;
-
-    if ((newRect.y2 - newRect.y1) <= 10) {
-      border = (newRect.y2 - newRect.y1) / 3;
-    }
-    else if ((newRect.x2 - newRect.x1) <= 10) {
-      border = (newRect.x2 - newRect.x1) / 3;
-    }
-
-    let i = 0;
-    while (i != tree.children.length) {
-
-      rowHeight = newRect.y2 - newRect.y1;
-      rowWidth = newRect.x2 - newRect.x1;
-      let size = attrFun(tree.children[i]);
-      currentRow.push(tree.children[i]);
-      let aspectRatio = calculateAspectRatio(size, currentRow, rect.x2 - rect.x1, rect.y2 - rect.y1, attrFun(tree));
-
-      if ((currentAspectRatio !== 0 && aspectRatio <= currentAspectRatio && i == tree.children.length - 1)
-        || (currentAspectRatio !== 0 && aspectRatio > currentAspectRatio)
-        || (currentAspectRatio == 0 && i == tree.children.length - 1)) {
-
-        if (currentAspectRatio != 0) {
-          const lastChild = currentRow.pop();
-        }
-        if (currentAspectRatio == 0 && i == tree.children.length - 1) {
-          i++;
-        }
-
-        const rowArea = currentRow.reduce((sum, node) => sum + attrFun(node), 0);
-
-        let lastrectWidth = 0;
-        let lastrectHeight = 0;
-
-        for (let j = 0; j < currentRow.length; j++) {
-
-          let size = attrFun(currentRow[j]);
-          let dept = currentRow[j].depth;
-          if (rowWidth > rowHeight) {
-
-            let Width = Math.ceil((rowArea / totalAreaLeft) * (rowWidth - border));
-            let Height = Math.ceil((size / rowArea) * (rowHeight - border));
-
-            currentRow[j].rect = {
-              x1: newRect.x1 + border,
-              x2: newRect.x1 + Width,
-              y1: newRect.y1 == 0 ? (lastrectHeight == 0 ? newRect.y1 + lastrectHeight + border : newRect.y1 + lastrectHeight) : newRect.y1 + lastrectHeight +border,
-              y2: newRect.y1 + lastrectHeight + Height
-            };
-
-            lastrectWidth = Width;
-            lastrectHeight = Height;
-
-          } else {
-
-            let Height = Math.ceil((rowArea / totalAreaLeft) * (rowHeight - border));
-            let Width = Math.ceil((size / rowArea) * (rowWidth - border));
-
-            currentRow[j].rect = {
-              x1: newRect.x1 + lastrectWidth + border,
-              x2: lastrectWidth == 0 ? newRect.x1 + lastrectWidth + Width : rect.x1 + lastrectWidth + Width + border,
-              y1: newRect.y1 + border,
-              y2: newRect.y1 + Height
-            };
-
-            lastrectWidth = Width;
-            lastrectHeight = Height;
-          }
-
-        }
-
-        lastRect = currentRow[currentRow.length - 1].rect;
-
-        if (rowWidth > rowHeight) {
-          newRect = { x1: newRect.x1 + lastrectWidth - border, y1: newRect.y1, x2: newRect.x2, y2: newRect.y2 };
-          rowWidth -= lastrectWidth;
-        } else {
-          newRect = { x1: newRect.x1, y1: newRect.y1 + lastrectHeight, x2: newRect.x2, y2: newRect.y2 };
-          rowHeight -= lastrectHeight;
-        }
-
-        totalAreaLeft -= rowArea;
-        currentRow = [];
-        currentAspectRatio = 0;
-
-      } else {
-        currentAspectRatio = aspectRatio;
-        i++;
-      }
-    }
-  }
-
-  // Set the rectangles for the children in the current row
-  for (let j = 0; j < tree.children.length; j++) {
-    const child = tree.children[j];
-    if (child.children !== undefined) {
-      const child = tree.children[j];
-      let childHeight = child.rect.y2 - child.rect.y1;
-      let childWidth = child.rect.x2 - child.rect.x1;
-      setRectangle_Square(child.rect, child, attrFun, attrFun(child));
-    }
-  }
-}
-
-
-// initialize the tree map
-let winWidth = window.innerWidth;
-let winHeight = window.innerHeight;
-
-// compute the rectangles for each tree node
-setRectangles(
-  { x1: 0, y1: 0, x2: winWidth, y2: winHeight }, data,
-  function (t) { return t.size; }
-);
-
-// make a list of all tree nodes;
-function makeTreeNodeList(tree, lst) {
-  lst.push(tree);
-  if (tree.children !== undefined) {
-    for (let i = 0; i < tree.children.length; ++i) {
-      makeTreeNodeList(tree.children[i], lst);
-    }
-  }
-}
-
-let treeNodeList = [];
-makeTreeNodeList(data, treeNodeList);
-console.log(treeNodeList)
-
-
-////////////////////////////////////////////////////////////////////////
-// Visual Encoding portion
-
-// d3 selection to draw the tree map 
-let gs = d3.select("#svg_a04")
-  .attr("width", winWidth)
-  .attr("height", winHeight)
-  .selectAll("g")
-  .data(treeNodeList)
-  .enter()
-  .append("g");
-
-
-/**
- * set the visual attributes of each rect. This should use all of the information that you’ve inserted in the tree through the four “set” functions.
- */
-function setAttrs(sel) {
-  // TODO: WRITE THIS PART.
-  sel.attr("width", function (treeNode) { return treeNode.rect.x2 - treeNode.rect.x1; })
-    .attr("height", function (treeNode) { return treeNode.rect.y2 - treeNode.rect.y1; })
-    .attr("x", function (treeNode) { return treeNode.rect.x1; })
-    .attr("y", function (treeNode) { return treeNode.rect.y1; })
-    .attr("fill", function (treeNode) { return colorScale(treeNode.depth) })
-    .attr("stroke", function (treeNode) { return "Black"; });
-}
-
-gs.append("rect").call(setAttrs);
-
-gs.select("rect").append("title")
-  .text(function (treeNode) {
-    return treeNode.name;
-  });
 
 ////////////////////////////////////////////////////////////////////////
 // Callbacks for buttons
@@ -523,7 +395,7 @@ d3.select("#size").on("click", function () {
     { x1: 0, x2: winWidth, y1: 0, y2: winHeight }, data,
     function (t) { return t.size; }
   );
-  d3.selectAll("rect").transition().duration(1000).call(setAttrs);
+  d3.select("#svg_a04").selectAll("rect").transition().duration(1000).call(setAttrs);
 });
 
 d3.select("#count").on("click", function () {
@@ -531,7 +403,7 @@ d3.select("#count").on("click", function () {
     { x1: 0, x2: winWidth, y1: 0, y2: winHeight }, data,
     function (t) { return t.count; }
   );
-  d3.selectAll("rect").transition().duration(1000).call(setAttrs);
+  d3.select("#svg_a04").selectAll("rect").transition().duration(1000).call(setAttrs);
 });
 
 /**
@@ -542,7 +414,7 @@ d3.select("#best-size").on("click", function () {
     { x1: 0, x2: winWidth, y1: 0, y2: winHeight }, data,
     function (t) { return t.size; }
   );
-  d3.selectAll("rect").transition().duration(1000).call(setAttrs);
+  d3.select("#svg_a04").selectAll("rect").transition().duration(1000).call(setAttrs);
 });
 
 d3.select("#best-count").on("click", function () {
@@ -550,27 +422,5 @@ d3.select("#best-count").on("click", function () {
     { x1: 0, x2: winWidth, y1: 0, y2: winHeight }, data,
     function (t) { return t.count; }
   );
-  d3.selectAll("rect").transition().duration(1000).call(setAttrs);
-});
-
-/**
- * Callback functions added for the buttons of Squarified Treemap
- */
-d3.select("#square-size").on("click", function () {
-  var data_square = data;
-  setRectangle_Square(
-    { x1: 0, x2: winWidth, y1: 0, y2: winHeight }, data,
-    function (t) { return t.size; }, data.size
-  );
-  d3.selectAll("rect").transition().duration(1000).call(setAttrs);
-
-  data = data_square;
-});
-
-d3.select("#square-count").on("click", function () {
-  setRectangle_Square(
-    { x1: 0, x2: winWidth, y1: 0, y2: winHeight }, data,
-    function (t) { return t.size; }, data.count
-  );
-  d3.selectAll("rect").transition().duration(1000).call(setAttrs);
+  d3.select("#svg_a04").selectAll("rect").transition().duration(1000).call(setAttrs);
 });
