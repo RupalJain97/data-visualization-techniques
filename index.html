@@ -40,18 +40,15 @@
         to see the visualization.</p>
 
     <div>
-        <input type="file" id="loadData">
         <ol>
             <li>
-                <p>
-                    Developing visualizations in d3.js in three different ways: (1) “by hand”, (2) through Javascript
-                    without any libraries, and (3) using d3.js
-                </p>
+                Developing visualizations in d3.js in three different ways: (1) “by hand”, (2) through Javascript
+                without any libraries, and (3) using d3.js
                 <button id="show_a01">Show</button>
                 <button id="hide_a01">Hide</button>
-                <div id="assign1" hidden>
-                    <div id="div1">
-                        <h4>Visualization 1 - by hand</h4>
+                <div id="assign1" style="margin-bottom: 5px;" hidden>
+                    <div id="div1" style="margin-right: 10px;">
+                        <h4 style="margin-top: 10px; margin-bottom: 10px;">Visualization 1 - by hand</h4>
                         <svg width="400" height="400">
                             <!-- Below 'g' tag contains 10 data points for the given set 'scores' -->
                             <g transform="translate(0, 400) scale(1, -1)">
@@ -95,12 +92,12 @@
                         </svg>
 
                     </div>
-                    <div id="div2">
-                        <h4>Visualization 2 - through Javascript
+                    <div id="div2" style="margin-right: 10px;">
+                        <h4 style="margin-top: 10px; margin-bottom: 10px;">Visualization 2 - through Javascript
                             without any libraries</h4>
                     </div>
                     <div id="div3">
-                        <h4>Visualization 3 - using d3.js</h4>
+                        <h4 style="margin-top: 10px; margin-bottom: 10px;">Visualization 3 - using d3.js</h4>
                     </div>
                 </div>
             </li>
@@ -109,7 +106,8 @@
                 Create Brushable Scatterplot Matrix (also sometimes abbreviated as “SPLOMs”).
                 <button id="show_a02">Show</button>
                 <button id="hide_a02">Hide</button>
-                <div id="assign2" hidden>
+                <div id="assign2" style="margin-bottom: 5px; margin-top: 5px;" hidden>
+                    <div id="colorLegend_a02"></div>
                     <div id="div1_a02"></div>
                 </div>
             </li>
@@ -120,7 +118,7 @@
                 <button id="show_a03">Show</button>
                 <button id="hide_a03">Hide</button>
                 <div id="assign3" hidden>
-                    <div id="colorLegend">
+                    <div id="colorLegend" style="width: 872px">
                         <select id="columns"></select>
                     </div>
                     <div id="div1_a03"></div>
@@ -139,8 +137,6 @@
                         <button id="count">Count</button>
                         <button id="best-size">Best Size</button>
                         <button id="best-count">Best Count</button>
-                        <button id="square-size">Squarified Size</button>
-                        <button id="square-count">Squarified Count</button>
                     </div>
                     <svg id="svg_a04"></svg>
                 </div>
@@ -161,7 +157,7 @@
                         <text id="currentSelection"></text>
                     </div>
 
-                    <div>
+                    <div style="height: 500px;">
                         <div id="volren"></div>
                         <div id="tfunc"></div>
                     </div>
@@ -170,17 +166,19 @@
             <br>
 
             <li>
-                Basics of vector field visualization through encoding per-position properties with a variety of techniques. Specific objectives include:
+                Basics of vector field visualization through encoding per-position properties with a variety of
+                techniques. Specific objectives include:
                 <ol>
                     <li>Using color and glyphs to encode both magnitude and orientation.</li>
                     <li>Using streamlines to capture integrated properties of streamlines.</li>
-                    <li>Experimenting with both random and uniform seeding patterns to adjust the position of both glyphs and streamlines</li>
+                    <li>Experimenting with both random and uniform seeding patterns to adjust the position of both
+                        glyphs and streamlines</li>
                 </ol>
-                <button id="show_a06">Show</button>
-                <button id="hide_a06">Hide</button>
-                <div id="assign6" hidden>
+                <button id="show_a06" style="margin-top: 5px;">Show</button>
+                <button id="hide_a06" style="margin-top: 5px;">Hide</button>
+                <div id="assign6" name style="margin-top: 10px;" hidden>
                     <div>
-                        <input type="file" id="loadData">
+                        <input type="file" id="loadData_a06">
                         <label>Vector field:</label>
                         <select name="type" id="type">
                             <option value="Glyphs" selected>Glyphs</option>
@@ -273,7 +271,6 @@
                     </table>
                     <button type="reset" id="reset"
                         style="margin-top: 5px; color:rgb(0, 0, 0); background-color: rgb(201, 147, 251);">Reset</button>
-
                     <div id="vfplot"></div>
                 </div>
             </li>
@@ -285,7 +282,7 @@
     <script src="technique1/plot3.js"></script>
 
     <script src="technique2/a02.js"></script>
-    <script src="technique3/a03.js"></script>
+    <script src="technique3/a03.js"></script> 
     <script src="technique4/a04.js"></script>
     <script src="technique5/a05.js"></script>
     <script src="technique6/a06.js"></script>
