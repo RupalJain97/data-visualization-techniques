@@ -17,9 +17,10 @@ d3.select("#hide_a02").on("click", function () {
 
 d3.select("#show_a03").on("click", function () {
     d3.select("#assign3").attr("hidden", null);
+    main_a03();
 });
 d3.select("#hide_a03").on("click", function () {
-    d3.select("#assign3").attr("hidden", true);
+    d3.select("#assign3").empty();
 });
 
 
