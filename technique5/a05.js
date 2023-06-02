@@ -151,12 +151,10 @@ function updateTFunc() {
   /**
    * Extra feature: Color the circles in the line plot based on the position of the circle with respect to the x-axis
    */
-  console.log(colorTF, points);
   d3.selectAll('circle')
     .style('fill', function (d) {
       // Normalizing the index of the circle in points array with respect to the colorTF array length and rounding it to the nearest integer.
       let Circleposition = (points.indexOf(d) / (points.length) * colorTF.length);
-      console.log(Circleposition, colorTF[Math.round(Circleposition)]);
       return colorTF[Math.round(Circleposition)][1];
     });
 }
