@@ -15,14 +15,14 @@
 //
 //
 
+
 ////////////////////////////////////////////////////////////////////////
 // Global variables for the dataset 
 
-data = cars;
+
 
 // dims will store the seven numeric axes in left-to-right display order
-let dims = Object.keys(data[0]).filter(d => typeof data[0][d] === "number");
-
+let dims = [];
 
 ////////////////////////////////////////////////////////////////////////
 // Global variables for the svg
@@ -34,15 +34,7 @@ let dims = Object.keys(data[0]).filter(d => typeof data[0][d] === "number");
    padding -> setting the padding value for the viewbox which is the main svg
    svg -> global variable having the plot and the legend
 */
-width = dims.length * 125;
-height = 500;
-padding = 50;
 
-svg = d3.select("#div1_a03")
-  .attr("transform", "translate(0,100)")
-  .append("svg")
-  .attr("width", width).attr("height", height - 20)
-  .attr("viewBox", [-5, 20, width, height - padding - 10]);
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -53,14 +45,8 @@ svg = d3.select("#div1_a03")
 //  - brushes[] stores each brush, one per id
 //  - brushRanges[] stores each brush's event.selection, one per id
 
-xScale = d3.scalePoint()
-  .domain(dims)
-  .range([padding, width - padding]);
-
-yScales = {};
 let colorScales = {};
 let axes = {};
-brushes = {};
 let brushRanges = {};
 
 /**
@@ -68,16 +54,11 @@ let brushRanges = {};
  * 
  *  div -> this variable creates a div tag that is used to display the name of the cars when hovering is done using mouse on the data lines.
  */
-var div = d3.select("body").append("div")
-  .attr("class", "tooltip-donut")
-  .style("opacity", 0);
+var div;
 var currentColorScale = 0;
 
 /** Creating a new div before pcplot to show the color legend */
-let colorSVG = d3.select("#colorLegend")
-  .append("svg")
-  .attr("width", width * 2).attr("height", 70)
-  .attr("id", "svgColorLegend")
+let colorSVG;
 
 
 /**
@@ -89,26 +70,9 @@ let colorSVG = d3.select("#colorLegend")
  * Ref: https://d3-graph-gallery.com/graph/line_select.html
  * 
  */
-var dropDown = d3.select("#columns")
-  .attr("class", "select")
-  .attr("aria-label", "cars")
-  .attr("name", "dims-list")
-  .attr("width", 500).attr("height", 50)
-  .attr("transform", "translate(50,50)")
-  .attr("title", "cars")
-  .on("change", function (d) {
-    /**
-     * Calling a helper function updateSelection to change the color legend and the color of the data lines
-     */
-    updateSelection();
-  });
+var dropDown;
+var options;
 
-var options = dropDown.selectAll("myoption")
-  .data(dims)
-  .enter()
-  .append("option")
-  .text(function (d) { return d; })
-  .attr("value", function (d) { return d; });
 
 /**
  * 
@@ -146,6 +110,69 @@ function Legend_PC(dim) {
   colorSVG.select(".legendSequential")
     .call(legendSequential);
 }
+
+
+
+/**
+ * Main function to be called when user clicks on the Show button
+ */
+function main_a03() {
+  data = cars;
+  dims = Object.keys(data[0]).filter(d => typeof data[0][d] === "number");
+
+  width = dims.length * 125;
+  height = 500;
+  padding = 50;
+
+  svg = d3.select("#div1_a03")
+    .attr("transform", "translate(0,100)")
+    .append("svg")
+    .attr("width", width).attr("height", height - 20)
+    .attr("viewBox", [-5, 20, width, height - padding - 10]);
+
+  xScale = d3.scalePoint()
+    .domain(dims)
+    .range([padding, width - padding]);
+
+  yScales = {};
+  colorScales = {};
+  axes = {};
+  brushes = {};
+  brushRanges = {};
+
+
+  div = d3.select("body").append("div")
+    .attr("class", "tooltip-donut")
+    .style("opacity", 0);
+  currentColorScale = 0;
+
+  /** Creating a new div before pcplot to show the color legend */
+  colorSVG = d3.select("#assign3").select("#colorLegend")
+    .append("svg")
+    .attr("width", width * 2).attr("height", 70)
+    .attr("id", "svgColorLegend")
+
+  dropDown = d3.select("#assign3").select("#columns")
+    .attr("class", "select")
+    .attr("aria-label", "cars")
+    .attr("name", "dims-list")
+    .attr("width", 500).attr("height", 50)
+    .attr("transform", "translate(50,50)")
+    .attr("title", "cars")
+    .on("change", function (d) {
+      /**
+       * Calling a helper function updateSelection to change the color legend and the color of the data lines
+       */
+      updateSelection();
+    });
+
+  options = dropDown.selectAll("myoption")
+    .data(dims)
+    .enter()
+    .append("option")
+    .text(function (d) { return d; })
+    .attr("value", function (d) { return d; });
+
 
 /** Calling the above functions to display the color dropdown and legend */
 Legend_PC(dims[currentColorScale]);
@@ -409,7 +436,7 @@ d3.select("#pcplot")
   .style("fill", "black")
   .style("font-size", 14)
 
-
+}
 
 ////////////////////////////////////////////////////////////////////////
 // Interaction Callbacks
