@@ -1,4 +1,4 @@
-svg {
+/* svg {
   margin: 0px;
 }
 
@@ -24,12 +24,9 @@ svg text {
 .x-axis text {
   font-family: sans-serif;
   font-size: 11px;
-}
+} */
 
 #assign1 div {
   display: inline-block;
-  /* width: 33.33%; */
-  /* Set the width to divide the parent equally */
   vertical-align: top;
-  /* Align the divs to the top */
 }
