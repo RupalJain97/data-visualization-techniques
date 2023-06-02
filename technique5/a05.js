@@ -26,12 +26,7 @@
 let colorTF = [];
 let opacityTF = [];
 
-// D3 layout variables
-size = 500;
-svg = null;
-
 // Defining the padding and the x and y coordinates used in drag function.
-padding = 50;
 var x, y = null;
 
 // Pos is used to store the index of the circle currently selected for drag
@@ -47,22 +42,15 @@ var currentSelection = null;
 var points = [];
 
 // Defining the color scale for the color bar, default selection is sequential 
-let colorScaleBar = d3.scaleSequential(d3.interpolateViridis)
-  .domain([dataRange[0], dataRange[1]]);
+let colorScaleBar;
 
-// Appending the text to display the current color scale selected by the user
-d3.select("#currentSelection")
-  .style("font-size", 16)
-  .style("font-style", "italic")
-  .style("font-weight", "bold")
-  .style("color", "#ba1818");
 
 ////////////////////////////////////////////////////////////////////////
 // Visual Encoding portion that handles the d3 aspects
 
 // Function to create the d3 objects
 function initializeTFunc() {
-  svg = d3.select("#tfunc")
+  svg = d3.select("#assign5").select("#tfunc")
     .append("svg")
     .attr("width", size)
     .attr("height", size)
@@ -163,22 +151,15 @@ function updateTFunc() {
   /**
    * Extra feature: Color the circles in the line plot based on the position of the circle with respect to the x-axis
    */
+  console.log(colorTF, points);
   d3.selectAll('circle')
     .style('fill', function (d) {
       // Normalizing the index of the circle in points array with respect to the colorTF array length and rounding it to the nearest integer.
       let Circleposition = (points.indexOf(d) / (points.length) * colorTF.length);
+      console.log(Circleposition, colorTF[Math.round(Circleposition)]);
       return colorTF[Math.round(Circleposition)][1];
     });
 }
-
-
-// To start, let's reset the TFs and then initialize the d3 SVG canvas
-// to draw the default transfer function
-
-resetTFs();
-initializeTFunc();
-
-console.log(colorTF)
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -349,8 +330,8 @@ function makePlot() {
 
 // Function to process the upload
 function upload() {
-  if (input.files.length > 0) {
-    let file = input.files[0];
+  if (input_a05.files.length > 0) {
+    let file = input_a05.files[0];
     console.log("You chose", file.name);
 
     let fReader = new FileReader();
@@ -376,11 +357,43 @@ function upload() {
   }
 }
 
+/**
+ * Main function to visualize the data
+ */
+function main_a05() {
+  colorTF = [];
+  opacityTF = [];
+
+  size = 500;
+  svg = null;
+
+  padding = 50;
+  x, y = null;
+
+  pos = null;
+  ActiveButton = false;
+  currentSelection = null;
+  points = [];
+
+  colorScaleBar = d3.scaleSequential(d3.interpolateViridis)
+    .domain([dataRange[0], dataRange[1]]);
+
+  // Appending the text to display the current color scale selected by the user
+  d3.select("#currentSelection")
+    .style("font-size", 16)
+    .style("font-style", "italic")
+    .style("font-weight", "bold")
+    .style("color", "#ba1818");
+
+  // To start, let's reset the TFs and then initialize the d3 SVG canvas
+  // to draw the default transfer function
+  resetTFs();
+  initializeTFunc();
+}
+
 // Attach upload process to the loadData button
-var input = document.getElementById("loadData");
-input.addEventListener("change", upload);
-
-
+var input_a05 = document.getElementById("loadData");
+input_a05.addEventListener("change", upload);
 
 ////////////////////////////////////////////////////////////////////////
 // Functions to respond to buttons that switch color TFs
