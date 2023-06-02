@@ -88,7 +88,11 @@ function Legend_PC(dim) {
 
   colorSVG.append("text")
     .attr("transform", "translate(10,23)")
-    .text(`The color Legend is based on the ${dim} column. Please select the attribute from the drop down menu to set the default color of the data lines.`);
+    .text(`The color Legend is based on the ${dim} column. Please select the attribute from the drop down menu to set the default`);
+
+  colorSVG.append("text")
+    .attr("transform", "translate(10,43)")
+    .text(`color of the data lines.`);
 
   var sequentialScale = d3.scaleSequential()
     .domain(d3.extent(data, function (datum) { return datum[dim]; }))
@@ -97,7 +101,7 @@ function Legend_PC(dim) {
 
   colorSVG.append("g")
     .attr("class", "legendSequential")
-    .attr("transform", "translate(10,35)");
+    .attr("transform", "translate(10,55)");
 
   /** creating horizontal label and removing the decimals from the values */
   var legendSequential = d3.legendColor()
@@ -149,7 +153,7 @@ function main_a03() {
   /** Creating a new div before pcplot to show the color legend */
   colorSVG = d3.select("#assign3").select("#colorLegend")
     .append("svg")
-    .attr("width", width * 2).attr("height", 70)
+    .attr("width", 870).attr("height", 100)
     .attr("id", "svgColorLegend")
 
   dropDown = d3.select("#assign3").select("#columns")
@@ -174,267 +178,267 @@ function main_a03() {
     .attr("value", function (d) { return d; });
 
 
-/** Calling the above functions to display the color dropdown and legend */
-Legend_PC(dims[currentColorScale]);
+  /** Calling the above functions to display the color dropdown and legend */
+  Legend_PC(dims[currentColorScale]);
 
-// For each dimension, we will initialize a yScale, axis, brush, and
-// brushRange
-dims.forEach(function (dim) {
-  //create a scale for each dimension
-  yScales[dim] = d3.scaleLinear()
-    .domain(d3.extent(data, function (datum) { return datum[dim]; }))
-    .range([height - padding, padding]);
-
-
-  //create a color scale for each dimension
-  colorScales[dim] = d3.scaleSequential()
-    .domain(d3.extent(data, function (datum) { return datum[dim]; }))
-    .range([height - padding, padding])
-    .interpolator(d3.interpolateBrBG);
+  // For each dimension, we will initialize a yScale, axis, brush, and
+  // brushRange
+  dims.forEach(function (dim) {
+    //create a scale for each dimension
+    yScales[dim] = d3.scaleLinear()
+      .domain(d3.extent(data, function (datum) { return datum[dim]; }))
+      .range([height - padding, padding]);
 
 
-  //set up a vertical axis for each dimensions
-  axes[dim] = d3.axisLeft()
-    .scale(yScales[dim])
+    //create a color scale for each dimension
+    colorScales[dim] = d3.scaleSequential()
+      .domain(d3.extent(data, function (datum) { return datum[dim]; }))
+      .range([height - padding, padding])
+      .interpolator(d3.interpolateBrBG);
 
 
-  //set up brushes as a 20 pixel width band
-  //we will use transforms to place them in the right location
-  brushes[dim] = d3.brushY()
-    .extent([
-      [-10, padding],
-      [10, height - padding]
-    ])
-    .on("start", updateBrush(dim));
+    //set up a vertical axis for each dimensions
+    axes[dim] = d3.axisLeft()
+      .scale(yScales[dim])
 
 
-  //brushes will be hooked up to their respective updateBrush functions
-  brushes[dim]
-    .on("brush", updateBrush(dim))
-    .on("end", updateBrush(dim))
+    //set up brushes as a 20 pixel width band
+    //we will use transforms to place them in the right location
+    brushes[dim] = d3.brushY()
+      .extent([
+        [-10, padding],
+        [10, height - padding]
+      ])
+      .on("start", updateBrush(dim));
 
-  //initial brush ranges to null
-  brushRanges[dim] = null;
-});
 
-////////////////////////////////////////////////////////////////////////
-// Make the parallel coordinates plots 
+    //brushes will be hooked up to their respective updateBrush functions
+    brushes[dim]
+      .on("brush", updateBrush(dim))
+      .on("end", updateBrush(dim))
 
-// add the actual polylines for data elements, each with class "datapath"
-/** 
- * 
- * Creating the polylines under the class " datapath", using the xScale and yScale to map the x,y coordinates of a data element according to all the y axis.
- * 
- * Ref: https://observablehq.com/d/042834fb33485d09
- *      https://medium.com/@kj_schmidt/show-data-on-mouse-over-with-d3-js-3bf598ff8fc2
- * 
- * 
- * EXTRA FEATURE:
- * 
- * Adding mouseover and mouseout functionality to display the name of the cars for each data element.
- * 
- * 
-*/
-svg.append("g")
-  .attr("class", "datalines")
-  .selectAll(".datapath")
-  .data(data)
-  .enter()
-  .append("path")
-  .attr("class", "datapath")
-  .attr("d", d => d3.line()(dims.map(function (p) { return [xScale(p), yScales[p](d[p])]; })))
-  .style("fill", "none")
-  .style("stroke", d => colorScales[dims[currentColorScale]](d[dims[currentColorScale]]))
-  .style("opacity", 0.5)
-  .on('mouseover', function (d, i) {
-    d3.select(this).transition()
-      .duration('50');
-    div.transition()
-      .duration(50)
-      .style("opacity", 1);
-    div.html(i.name)
-      .style("left", (d.pageX + 10) + "px")
-      .style("top", (d.pageY - 15) + "px");
-  })
-  .on('mouseout', function (d, i) {
-    d3.select(this).transition()
-      .duration('50')
-      .attr('opacity', '1');
-    div.transition()
-      .duration('50')
-      .style("opacity", 0);
+    //initial brush ranges to null
+    brushRanges[dim] = null;
   });
 
+  ////////////////////////////////////////////////////////////////////////
+  // Make the parallel coordinates plots 
 
-// add the axis groups, each with class "axis"
-/** 
- * 
- * Creating the axis with the class "axis", using the xScale and axes objects. I have also given an unique ID to each axis. 
- * Appending a group tage with class "column_label" to combine the label and reordering buttons under one tag. 
- * Similarly defining the elements after and specifying the position, calling their respective onClick/mouseover/mouseleave functions. 
- * 
- * Ref: https://observablehq.com/d/042834fb33485d09
- *      https://observablehq.com/@julesblm/how-d3-symbol-works-by-someone-who-keeps-forgetting-how-it-wo
- *      https://htmldom.dev/swap-two-nodes/
-*/
-svg.selectAll(".axis")
-  .data(dims).enter()
-  .append("g")
-  .attr("class", "axis")
-  .attr("id", function (d) {
-    /** examples of ID: IDyear, IDcylinders, IDdisplacement, ID060... */
-    return "ID" + d.split(' ')[0].replace(/[^A-Z0-9]/ig, "");
-  })
-  .attr("transform", function (d) { return "translate(" + xScale(d) + ")"; })
-  .each(function (d) { d3.select(this).call(axes[d]); });
-
-svg.selectAll(".axis")
-  .append("g")
-  .attr("class", "Column_label")
-  /** Appending the label text tag */
-  .append("text")
-  .attr("class", "label");
-
-
-/**
- * 
- * EXTRA FEATURE:
- * 
- * Added mouseover functionality of the axis ticks as well. This means that whenever mouse is rolled over axis, it will bold the axis and its label and also display the color coding based on that particular column.
- * 
- * 
- */
-svg.selectAll(".tick")
-  .on("mouseover", function (event, d) { return onMouseOver(event, d); })
-  .on("mouseleave", function (event, d) { return onMouseExit(event, d); })
-
-// add the axes labels, each with class "label"
-/** 
- * 
- * Creating labels and adding events such as click, mouseover and mouseleave.
- * 
- * Note: The label is also having onClick functionality despite there are buttons present to move the column in either direction.
- * 
-*/
-svg.selectAll(".label")
-  .style("text-anchor", "middle")
-  .attr("y", padding - 25)
-  .text(function (d) { return d; })
-  .style("fill", "black")
-  .on("click", function (event, d) { return onClick(event, d); })
-  .on("mouseover", function (event, d) { return onMouseOver(event, d); })
-  .on("mouseleave", function (event, d) { return onMouseExit(event, d); })
+  // add the actual polylines for data elements, each with class "datapath"
+  /** 
+   * 
+   * Creating the polylines under the class " datapath", using the xScale and yScale to map the x,y coordinates of a data element according to all the y axis.
+   * 
+   * Ref: https://observablehq.com/d/042834fb33485d09
+   *      https://medium.com/@kj_schmidt/show-data-on-mouse-over-with-d3-js-3bf598ff8fc2
+   * 
+   * 
+   * EXTRA FEATURE:
+   * 
+   * Adding mouseover and mouseout functionality to display the name of the cars for each data element.
+   * 
+   * 
+  */
+  svg.append("g")
+    .attr("class", "datalines")
+    .selectAll(".datapath")
+    .data(data)
+    .enter()
+    .append("path")
+    .attr("class", "datapath")
+    .attr("d", d => d3.line()(dims.map(function (p) { return [xScale(p), yScales[p](d[p])]; })))
+    .style("fill", "none")
+    .style("stroke", d => colorScales[dims[currentColorScale]](d[dims[currentColorScale]]))
+    .style("opacity", 0.5)
+    .on('mouseover', function (d, i) {
+      d3.select(this).transition()
+        .duration('50');
+      div.transition()
+        .duration(50)
+        .style("opacity", 1);
+      div.html(i.name)
+        .style("left", (d.pageX + 10) + "px")
+        .style("top", (d.pageY - 15) + "px");
+    })
+    .on('mouseout', function (d, i) {
+      d3.select(this).transition()
+        .duration('50')
+        .attr('opacity', '1');
+      div.transition()
+        .duration('50')
+        .style("opacity", 0);
+    });
 
 
-/**
- * 
- * EXTRA FEATURE
- * 
- * Adding 2 traingles which are used to reorder the column(y axis) of the plot. The left traingle is used to shift the column to the left and right traingle is used to shift the column to the right.
- * 
- * The feature can be seen by clicking on the traingles and the transition in the data lines changing would be seen. the data lines would get updated with respect to the column order of the y axis. For the last first column, the only option is to go on the right and for the last column, the only option is to go to the left.
- * 
- * Ref: https://htmldom.dev/swap-two-nodes/
- * 
- */
-svg.selectAll(".Column_label")
-  .append("path")
-  .attr("class", "left")
-  .attr("d", d3.symbol().type(d3.symbolTriangle).size(30))
-  .attr("transform", "translate(-8, 35) rotate(-90)")
-  .on("click", function (event, d) { return onClick(event, d); })
-  .each(function (d) {
-    if (dims.indexOf(d) == 0) {
-      d3.select(this).style("display", "none");
-    }
-  });
-svg.selectAll(".Column_label")
-  .append("path")
-  .attr("class", "right")
-  .attr("d", d3.symbol().type(d3.symbolTriangle).size(30))
-  .attr("transform", "translate(9, 35) rotate(90)")
-  .on("click", function (event, d) { return onClick(event, d); })
-  .each(function (d) {
-    if (dims.indexOf(d) == dims.length - 1) {
-      d3.select(this).style("display", "none");
-    }
-  });
+  // add the axis groups, each with class "axis"
+  /** 
+   * 
+   * Creating the axis with the class "axis", using the xScale and axes objects. I have also given an unique ID to each axis. 
+   * Appending a group tage with class "column_label" to combine the label and reordering buttons under one tag. 
+   * Similarly defining the elements after and specifying the position, calling their respective onClick/mouseover/mouseleave functions. 
+   * 
+   * Ref: https://observablehq.com/d/042834fb33485d09
+   *      https://observablehq.com/@julesblm/how-d3-symbol-works-by-someone-who-keeps-forgetting-how-it-wo
+   *      https://htmldom.dev/swap-two-nodes/
+  */
+  svg.selectAll(".axis")
+    .data(dims).enter()
+    .append("g")
+    .attr("class", "axis")
+    .attr("id", function (d) {
+      /** examples of ID: IDyear, IDcylinders, IDdisplacement, ID060... */
+      return "ID" + d.split(' ')[0].replace(/[^A-Z0-9]/ig, "");
+    })
+    .attr("transform", function (d) { return "translate(" + xScale(d) + ")"; })
+    .each(function (d) { d3.select(this).call(axes[d]); });
+
+  svg.selectAll(".axis")
+    .append("g")
+    .attr("class", "Column_label")
+    /** Appending the label text tag */
+    .append("text")
+    .attr("class", "label");
+
+
+  /**
+   * 
+   * EXTRA FEATURE:
+   * 
+   * Added mouseover functionality of the axis ticks as well. This means that whenever mouse is rolled over axis, it will bold the axis and its label and also display the color coding based on that particular column.
+   * 
+   * 
+   */
+  svg.selectAll(".tick")
+    .on("mouseover", function (event, d) { return onMouseOver(event, d); })
+    .on("mouseleave", function (event, d) { return onMouseExit(event, d); })
+
+  // add the axes labels, each with class "label"
+  /** 
+   * 
+   * Creating labels and adding events such as click, mouseover and mouseleave.
+   * 
+   * Note: The label is also having onClick functionality despite there are buttons present to move the column in either direction.
+   * 
+  */
+  svg.selectAll(".label")
+    .style("text-anchor", "middle")
+    .attr("y", padding - 25)
+    .text(function (d) { return d; })
+    .style("fill", "black")
+    .on("click", function (event, d) { return onClick(event, d); })
+    .on("mouseover", function (event, d) { return onMouseOver(event, d); })
+    .on("mouseleave", function (event, d) { return onMouseExit(event, d); })
+
+
+  /**
+   * 
+   * EXTRA FEATURE
+   * 
+   * Adding 2 traingles which are used to reorder the column(y axis) of the plot. The left traingle is used to shift the column to the left and right traingle is used to shift the column to the right.
+   * 
+   * The feature can be seen by clicking on the traingles and the transition in the data lines changing would be seen. the data lines would get updated with respect to the column order of the y axis. For the last first column, the only option is to go on the right and for the last column, the only option is to go to the left.
+   * 
+   * Ref: https://htmldom.dev/swap-two-nodes/
+   * 
+   */
+  svg.selectAll(".Column_label")
+    .append("path")
+    .attr("class", "left")
+    .attr("d", d3.symbol().type(d3.symbolTriangle).size(30))
+    .attr("transform", "translate(-8, 35) rotate(-90)")
+    .on("click", function (event, d) { return onClick(event, d); })
+    .each(function (d) {
+      if (dims.indexOf(d) == 0) {
+        d3.select(this).style("display", "none");
+      }
+    });
+  svg.selectAll(".Column_label")
+    .append("path")
+    .attr("class", "right")
+    .attr("d", d3.symbol().type(d3.symbolTriangle).size(30))
+    .attr("transform", "translate(9, 35) rotate(90)")
+    .on("click", function (event, d) { return onClick(event, d); })
+    .each(function (d) {
+      if (dims.indexOf(d) == dims.length - 1) {
+        d3.select(this).style("display", "none");
+      }
+    });
 
 
 
-/////////////////////////////////////////////////////////////
-/***
- * 
- * EXTRA FEATURE
- * 
- * 
- * Inverted Axis: 
- * Added inverted axis feature on all the column, by appending 2 traingles below each y axis which are used to flip that axis.  
- * The upwards pointing traingle means that the ticks of the axis will be in increasing order starting from the top of the axis.
- * The downwards pointing traingle means that the ticks of the axis will be in decreasing order starting from the top of the axis.
- * 
- * A new group tag with class "flip" is appended to the axis class for each column. It is having a text tag and 2 path tags having the triangles
- * 
- * This can be seen by clicking on the traingles which will also change the data lines coordinates for that column. This transition is using a new helper function onClickAxisFlip(event, dim) defined further in the code, which is called on onClick event.
- * 
- */
-svg.selectAll(".axis")
-  .append("g")
-  .attr("class", "flip")
-  .append("path")
-  .attr("class", "increase")
-  .attr("d", d3.symbol().type(d3.symbolTriangle).size(30))
-  .attr("transform", "translate(-20, 468)")
-  .on("click", function (d) {
-    return onClickAxisFlip(event, d);
-  });
-svg.selectAll(".flip")
-  .append("text")
-  .style("text-anchor", "middle")
-  .attr("y", height - 30)
-  .text("Flip")
-  .style("fill", "black");
-svg.selectAll(".flip")
-  .append("path")
-  .attr("class", "decrease")
-  .attr("d", d3.symbol().type(d3.symbolTriangle).size(30))
-  .attr("transform", "translate(21, 466) rotate(-180)")
-  .on("click", function (d) {
-    return onClickAxisFlip(event, d);
-  });
+  /////////////////////////////////////////////////////////////
+  /***
+   * 
+   * EXTRA FEATURE
+   * 
+   * 
+   * Inverted Axis: 
+   * Added inverted axis feature on all the column, by appending 2 traingles below each y axis which are used to flip that axis.  
+   * The upwards pointing traingle means that the ticks of the axis will be in increasing order starting from the top of the axis.
+   * The downwards pointing traingle means that the ticks of the axis will be in decreasing order starting from the top of the axis.
+   * 
+   * A new group tag with class "flip" is appended to the axis class for each column. It is having a text tag and 2 path tags having the triangles
+   * 
+   * This can be seen by clicking on the traingles which will also change the data lines coordinates for that column. This transition is using a new helper function onClickAxisFlip(event, dim) defined further in the code, which is called on onClick event.
+   * 
+   */
+  svg.selectAll(".axis")
+    .append("g")
+    .attr("class", "flip")
+    .append("path")
+    .attr("class", "increase")
+    .attr("d", d3.symbol().type(d3.symbolTriangle).size(30))
+    .attr("transform", "translate(-20, 468)")
+    .on("click", function (d) {
+      return onClickAxisFlip(event, d);
+    });
+  svg.selectAll(".flip")
+    .append("text")
+    .style("text-anchor", "middle")
+    .attr("y", height - 30)
+    .text("Flip")
+    .style("fill", "black");
+  svg.selectAll(".flip")
+    .append("path")
+    .attr("class", "decrease")
+    .attr("d", d3.symbol().type(d3.symbolTriangle).size(30))
+    .attr("transform", "translate(21, 466) rotate(-180)")
+    .on("click", function (d) {
+      return onClickAxisFlip(event, d);
+    });
 
-// add the brush groups, each with class ".brush" 
-/**
- * 
- * Creating brushes for each column having 20 pixels fixed width.
- * 
- * 
- */
-svg.selectAll(".brush")
-  .data(dims).enter()
-  .append("g")
-  .attr("class", "brushing")
-  .attr("id", function (d) {
-    /** examples of ID: IDyear, IDcylinders, IDdisplacement, ID060... */
-    return "BrushID" + d.split(' ')[0].replace(/[^A-Z0-9]/ig, "");
-  })
-  .append("g")
-  .attr("class", "brush")
-  .attr("transform", function (d) { return "translate(" + xScale(d) + ")"; })
-  .each(function (d) { d3.select(this).call(brushes[d]); })
+  // add the brush groups, each with class ".brush" 
+  /**
+   * 
+   * Creating brushes for each column having 20 pixels fixed width.
+   * 
+   * 
+   */
+  svg.selectAll(".brush")
+    .data(dims).enter()
+    .append("g")
+    .attr("class", "brushing")
+    .attr("id", function (d) {
+      /** examples of ID: IDyear, IDcylinders, IDdisplacement, ID060... */
+      return "BrushID" + d.split(' ')[0].replace(/[^A-Z0-9]/ig, "");
+    })
+    .append("g")
+    .attr("class", "brush")
+    .attr("transform", function (d) { return "translate(" + xScale(d) + ")"; })
+    .each(function (d) { d3.select(this).call(brushes[d]); })
 
-/**
- * Added a not regarding the flip feature
- */
-d3.select("#pcplot").append("br");
-d3.select("#pcplot")
-  .append("g")
-  .attr("id", "note")
-  .append("text")
-  .style("text-anchor", "left")
-  .text("*Note: Arrow pointing upwards means increasing order of the ticks in axis starting from top. And vica versa for arrow pointing downwards. The color of the data lines will reflect the color according to the column selected but will soon turned back the orginal color due to transitions.")
-  .style("fill", "black")
-  .style("font-size", 14)
+  /**
+   * Added a not regarding the flip feature
+   */
+  d3.select("#pcplot").append("br");
+  d3.select("#pcplot")
+    .append("g")
+    .attr("id", "note")
+    .append("text")
+    .style("text-anchor", "left")
+    .text("*Note: Arrow pointing upwards means increasing order of the ticks in axis starting from top. And vica versa for arrow pointing downwards. The color of the data lines will reflect the color according to the column selected but will soon turned back the orginal color due to transitions.")
+    .style("fill", "black")
+    .style("font-size", 14)
 
 }
 
