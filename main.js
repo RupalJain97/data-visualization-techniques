@@ -43,6 +43,7 @@ d3.select("#show_a05").on("click", function () {
     var isFileUploaded = fileInput.value !== ""; // Check if the value is not empty
 
     if (!isFileUploaded) {
+        d3.select("#tfunc").html("");
         main_a05();
     }
 });
