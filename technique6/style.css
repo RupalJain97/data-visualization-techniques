@@ -1,25 +1,25 @@
 /* Styling for the tag present in HTML */
 
-table {
+#assign6 table {
     border: 2px;
     border-style: solid;
 }
 
-table th {
+#assign6 table th {
     border: 1px;
     border-style: solid;
     padding-left: 10px;
     padding-right: 10px;
 }
 
-table td {
+#assign6 table td {
     border: 1px;
     border-style: solid;
     padding-left: 10px;
     padding-right: 10px;
 }
 
-#note {
+#assign6 #note {
     margin-top: 10px;
     margin-bottom: 10px;
     font-style: italic;
@@ -27,13 +27,13 @@ table td {
     font-weight: bold;
 }
 
-text {
+#assign6 text {
     font-style: italic;
     display: inline;
     font-weight: bold;
 }
 
-h5 {
+#assign6 h5 {
     margin-top: 10px;
     margin-bottom: 10px;
 }

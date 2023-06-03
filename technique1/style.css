@@ -9,7 +9,7 @@
 */
 
 /* Formatting all <h1> tags */
-h1 {
+#assign1 h1 {
     padding: 0%;
     font-style: italic;
     color: rgb(65, 42, 165);
@@ -17,7 +17,7 @@ h1 {
 }
 
 /* Formatting <svg> tags under div1 and div3 */
-svg {
+#assign1 svg {
     background-color: #17ceceb5;
     border-style: solid;
     border-color: rgb(109, 112, 113);
@@ -27,7 +27,7 @@ svg {
 }
 
 /* Formatting <svg> tags under div2 */
-#div2 svg {
+#assign1 #div2 svg {
     background-color: #17ceceb5;
     border-style: solid;
     border-color: rgb(109, 112, 113);
@@ -38,12 +38,12 @@ svg {
 }
 
 /* Formatting all <circle> tags */
-#div1 svg circle {
+#assign1 #div1 svg circle {
     fill: rgb(52, 41, 147);
 }
 
 /* Text formatting for the cordinates on the x-axis and y-axis in Visualization 2 */
-.coordinates {
+#assign1 .coordinates {
     font-style: italic;
     display: inline;
     font-size: 12px;
@@ -51,14 +51,14 @@ svg {
 }
 
 /* Formatting for the x-axis and y-axis in Visualization 2 */
-line {
+#assign1 line {
     display: inline;
     stroke: black;
     stroke-width: 1.4px;
 }
 
 /* Text formatting for the text tags in Visualization 2 and 3 */
-text {
+#assign1 text {
     font-style: italic;
     display: inline;
     font-weight: bold;

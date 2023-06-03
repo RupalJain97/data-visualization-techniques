@@ -1,12 +1,8 @@
-/* Styling for Color Legend */
-#colorLegend {
-    background-color: rgb(245, 254, 244);
-}
-
-/* Styling for Labels in color legend */
-#colorLegend .label {
-    font-style: italic;
-    display: inline;
+/* Styling for buttons */
+#assign4 button {
+    background-color: rgb(193, 222, 237);
+    height: 25px;
+    margin-bottom: 5px;
+    border-radius: 5px;
     font-weight: bold;
-    font-size: 14px;
-}
+} 

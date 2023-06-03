@@ -1,5 +1,5 @@
 /* Styling for Labels in color legend */
-text {
+#assign5 text {
     font-style: italic;
     display: inline;
     font-weight: bold;
