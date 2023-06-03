@@ -153,7 +153,7 @@ function main_a03() {
   /** Creating a new div before pcplot to show the color legend */
   colorSVG = d3.select("#assign3").select("#colorLegend")
     .append("svg")
-    .attr("width", 870).attr("height", 100)
+    .attr("width", 875).attr("height", 100)
     .attr("id", "svgColorLegend")
 
   dropDown = d3.select("#assign3").select("#columns")
@@ -428,10 +428,10 @@ function main_a03() {
     .each(function (d) { d3.select(this).call(brushes[d]); })
 
   /**
-   * Added a not regarding the flip feature
+   * Added a note regarding the flip feature
    */
-  d3.select("#pcplot").append("br");
-  d3.select("#pcplot")
+  d3.select("#div1_a03").append("br");
+  d3.select("#div1_a03")
     .append("g")
     .attr("id", "note")
     .append("text")
@@ -780,7 +780,7 @@ function onMouseOver(event, dim) {
     .selectAll("text")
     .transition().duration(100)
     .style("font-weight", "bolder")
-    .style("font-size", "12px");
+    .style("font-size", "15px");
 }
 
 function onMouseExit(event, dim) {
@@ -818,7 +818,7 @@ function onMouseExit(event, dim) {
   d3.select(id)
     .selectAll("text")
     .style("font-weight", "bold")
-    .style("font-size", "10px");
+    .style("font-size", "12px");
 }
 
 /**
