@@ -381,7 +381,7 @@ function main_a05() {
     .style("font-size", 16)
     .style("font-style", "italic")
     .style("font-weight", "bold")
-    .style("color", "#ba1818");
+    // .style("color", "#ba1818");
 
   // To start, let's reset the TFs and then initialize the d3 SVG canvas
   // to draw the default transfer function
