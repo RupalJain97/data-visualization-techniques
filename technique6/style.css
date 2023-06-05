@@ -23,7 +23,7 @@
     margin-top: 10px;
     margin-bottom: 10px;
     font-style: italic;
-    color: rgb(134, 25, 170);
+    color: #ba1818;
     font-weight: bold;
 }
 
@@ -37,3 +37,24 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+#assign6 #reset {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: rgb(0, 0, 0);
+    background-color: #edc1c1;
+    font-weight: bold;
+    height: 25px;
+}
+
+#assign6 #loadData_a06 {
+    padding-top: 3px;
+    padding-left: 3px;
+    padding-bottom: 3px;
+    border: 2px solid black;
+    background-color: #edc1c1;
+    height: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-style: italic;
+} 
