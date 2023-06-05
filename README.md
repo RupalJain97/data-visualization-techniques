@@ -48,6 +48,7 @@ The "data-visualization-techniques" project is a comprehensive collection of var
 ![Execution](images/pic6.png)
 *Fig. 7*: *Execution*.
 
+
 ## Running the program
 
 Follow below steps to view the visualizations.
