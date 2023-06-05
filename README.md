@@ -69,12 +69,3 @@ OS: Windows
 ```
 start index.html
 ```
-
-<!-- ## References
-
-* https://cscheid.net/courses/fall-2019/csc444/lectures/lecture4/iteration_8.js
-* https://d3-graph-gallery.com/graph/custom_color.html
-* https://github.com/d3/d3-scale-chromatic
-* https://www.data-to-viz.com/caveat/overplotting.html
-* https://www.displayr.com/what-is-overplotting/
-* https://r-graphics.org/recipe-scatter-overplot -->
