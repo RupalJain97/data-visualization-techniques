@@ -1,4 +1,4 @@
-# data-vizualization-techniques
+# data-visualization-techniques
 
 Author: Rupal Jain [jainrupal@arizona.edu](mailto:jainrupal@arizona.edu)  
 Date: May 25, 2023
