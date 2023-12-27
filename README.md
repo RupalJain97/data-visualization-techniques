@@ -45,7 +45,7 @@ The "data-visualization-techniques" project is a comprehensive collection of var
 
     Please use the vti files in the datasets folder created under technique6 folder.
 
-![Execution](images/pic6.jpeg)
+![Execution](images/pic6.png)
 *Fig. 7*: *Execution*.
 
 
