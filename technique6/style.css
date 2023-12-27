@@ -5,6 +5,19 @@
     border-style: solid;
 }
 
+.plot-filter .scalefac {
+    width: 90px !important;  
+}
+.plot-filter .nstep {
+    width: 105px !important;  
+}
+.plot-filter .delta {
+    width: 60px !important;  
+}
+.plot-filter .num {
+    width: 130px !important;  
+}
+
 #assign6 table th {
     border: 1px;
     border-style: solid;

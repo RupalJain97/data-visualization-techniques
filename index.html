@@ -213,7 +213,7 @@
                         </tr>
                     </table>
                     <br>
-                    <table>
+                    <table class="plot-filter">
                         <tr>
                             <th>Vector field</th>
                             <th>Position</th>
@@ -233,8 +233,8 @@
                             <td>-</td>
                             <td>-</td>
                             <td>-</td>
-                            <td><input type="number" id="GlyphsNumX" value="30"></td>
-                            <td><input type="number" id="GlyphsNumY" value="30"></td>
+                            <td><input type="number" class="num" id="GlyphsNumX" value="30"></td>
+                            <td><input type="number" class="num" id="GlyphsNumY" value="30"></td>
                         </tr>
                         <tr>
                             <td>Glyphs</td>
@@ -244,30 +244,30 @@
                             <td>-</td>
                             <td>-</td>
                             <td>-</td>
-                            <td><input type="number" id="GlyphsRandNumX" value="100"></td>
-                            <td><input type="number" id="GlyphsRandNumY" value="10"></td>
+                            <td><input type="number" class="num" id="GlyphsRandNumX" value="100"></td>
+                            <td><input type="number" class="num" id="GlyphsRandNumY" value="10"></td>
                         </tr>
                         <tr>
                             <td>Streamline</td>
                             <td>Uniform</td>
                             <td id="maxSpeed"></td>
                             <td id="domainWidth"></td>
-                            <td><input type="number" id="scalingfactor" value="10"></td>
-                            <td><input type="number" id="steps" value=""></td>
-                            <td><input type="number" id="dt" value=""></td>
-                            <td><input type="number" id="StreamNumX" value="30"></td>
-                            <td><input type="number" id="StreamNumY" value="30"></td>
+                            <td><input type="number" class="scalefac" id="scalingfactor" value="10"></td>
+                            <td><input type="number" class="nstep" id="steps" value=""></td>
+                            <td><input type="number" class="delta" id="dt" value=""></td>
+                            <td><input type="number" class="num" id="StreamNumX" value="30"></td>
+                            <td><input type="number" class="num" id="StreamNumY" value="30"></td>
                         </tr>
                         <tr>
                             <td>Streamline</td>
                             <td>Random</td>
                             <td id="maxSpeed"></td>
                             <td id="domainWidth"></td>
-                            <td><input type="number" id="Randscalingfactor" value="10"></td>
-                            <td><input type="number" id="Randsteps" value=""></td>
-                            <td><input type="number" id="Randdt" value=""></td>
-                            <td><input type="number" id="StreamRandNumX" value="100"></td>
-                            <td><input type="number" id="StreamRandNumY" value="10"></td>
+                            <td><input type="number" class="scalefac" id="Randscalingfactor" value="10"></td>
+                            <td><input type="number" class="nstep" id="Randsteps" value=""></td>
+                            <td><input type="number" class="delta" id="Randdt" value=""></td>
+                            <td><input type="number" class="num" id="StreamRandNumX" value="100"></td>
+                            <td><input type="number" class="num" id="StreamRandNumY" value="10"></td>
                         </tr>
                     </table>
                     <button type="reset" id="reset">Reset the table values</button>
