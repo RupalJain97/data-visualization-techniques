@@ -20,7 +20,7 @@ The "data-visualization-techniques" project is a comprehensive collection of var
 
 2. Brushable Scatterplot Matrix. 
 
-![Execution](images/pic2.png)
+![Execution](images/pic2.jpeg)
 *Fig. 3*: *Brushable Scatterplot Matrix*.
 
 3. Parallel Coordinates visualization for multidimensional data.
@@ -45,7 +45,7 @@ The "data-visualization-techniques" project is a comprehensive collection of var
 
     Please use the vti files in the datasets folder created under technique6 folder.
 
-![Execution](images/pic6.png)
+![Execution](images/pic6.jpeg)
 *Fig. 7*: *Execution*.
 
 
