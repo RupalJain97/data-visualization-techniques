@@ -1,8 +1,8 @@
-# data-visualization-techniques
+# Data Visualization Techniques
 
 Author: Rupal Jain [jainrupal@arizona.edu](mailto:jainrupal@arizona.edu)  
 Date: May 25, 2023
-
+Website: Try it out[https://rupaljain97.github.io/data-visualization-techniques/]
 
 ## Overview
 
